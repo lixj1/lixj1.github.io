@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顶尖 AI 模型对比与适用场景分析</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --container-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #3b82f6;
+            --border: #e2e8f0;
+            --excel-bg: #f8fafc;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --container-bg: #1e293b;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --border: #334155;
+                --excel-bg: #0f172a;
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #e0e7ff 100%);
+            @media (prefers-color-scheme: dark) {
+                background: linear-gradient(135deg, var(--bg-color) 0%, #1e1b4b 100%);
+            }
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            @media (prefers-color-scheme: dark) {
+                background: rgba(30, 41, 59, 0.85);
+            }
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            padding: 48px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            background: -webkit-linear-gradient(45deg, #3b82f6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--container-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--excel-bg);
+            font-weight: 600;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        table tr:hover td {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .cards { grid-template-columns: 1fr; }
+            .container { padding: 24px; }
+        }
+
+        .card {
+            background: var(--container-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .tags {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: inline-block;
+            background: var(--bg-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 16px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.4);
+        }
+        
+        .summary-box h2 {
+            border: none;
+            color: white;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+        
+        .summary-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 16px;
+        }
+        
+        .summary-box li {
+             margin-bottom: 0;
+             font-size: 1.1rem;
+             display: flex;
+             align-items: center;
+             gap: 12px;
+             background: rgba(255,255,255,0.1);
+             padding: 16px;
+             border-radius: 12px;
+             backdrop-filter: blur(4px);
+             transition: background 0.2s;
+        }
+        
+        .summary-box li:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤝 团队大模型使用指南 (入门必读)</h1>
+        <p style="text-align: center; color: var(--text-muted);">本指南旨在帮助协同办公的同事们快速配置好您的专属大模型工作站。</p>
+        
+        <div class="summary-box" style="background: linear-gradient(135deg, #f59e0b 0%, #d97757 100%); margin-top: 20px; box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.4);">
+            <h2 style="margin-top: 0; margin-bottom: 20px; color: white; border: none;">🛠️ 快速配置四部曲</h2>
+            <div style="display: grid; gap: 16px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
+                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">1️⃣ 安装底层工具</h3>
+                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">打开公司系统内部的 <b>软件中心</b>，搜索并获取安装 <strong>Visual Studio Code</strong> 软件。</p>
+                    <img src="step1.png" alt="步骤1：安装VSCode" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
+                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">2️⃣ 导入 AI 插件</h3>
+                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">打开 VSCode，在最左侧点开 <strong>“扩展”图标 (四个小方框)</strong> 并搜索 <code>copilot</code>，安装包含 <strong>GitHub Copilot Chat</strong> 的相关官方插件。</p>
+                    <img src="step2.png" alt="步骤2：安装插件" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
+                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">3️⃣ 账号对接授权</h3>
+                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">点击最左下角处的 <strong>账户头像菜单</strong>触发认证，选择使用 <strong>GitHub 登录</strong>，并在弹窗网页里输入 <b>您公司邮箱收到的初始用户名</b> 即可通过。</p>
+                    <img src="step3.png" alt="步骤3：账户登录" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
+                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">4️⃣ 状态就绪验收</h3>
+                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">回到主界面，留意 VSCode 的 <b>最右下角</b>，只要在这里看到一个 <strong>“小机器人”徽标</strong>，即代表模型环境接入完毕！</p>
+                    <img src="step4.png" alt="步骤4：验证状态" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+                </div>
+            </div>
+        </div>
+
+        <hr style="border: none; border-top: 2px dashed var(--border); margin: 60px 0;">
+
+        <h1>顶尖 AI 模型对比与适用场景分析</h1>
+        <p style="text-align: center; color: var(--text-muted);">本文档对比了当前最前沿的四大生成式 AI 模型的各项能力及其适配场景。</p>
+        
+        <h2>📊 核心能力热力图</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">评分标准：🟩 卓越 (最佳性能) | 🟨 推荐 (表现优秀) | 🟧 够用 (普通水平)</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>评估维度</th>
+                    <th>Gemini 3.1</th>
+                    <th>GPT 5.4</th>
+                    <th>Claude Opus 4.6</th>
+                    <th>Claude Sonnet 4.6</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>逻辑推理与数学</strong></td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
+                <tr><td><strong>创意与长文写作</strong></td><td>🟨 推荐</td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
+                <tr><td><strong>代码编写与架构</strong></td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟩 卓越</td></tr>
+                <tr><td><strong>超长文本(检索)</strong></td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
+                <tr><td><strong>多模态(图频音)</strong></td><td>🟩 卓越</td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟧 够用</td></tr>
+                <tr><td><strong>响应速度执行力</strong></td><td>🟨 推荐</td><td>🟧 够用</td><td>🟧 够用</td><td>🟩 卓越</td></tr>
+                <tr><td><strong>API综合性价比</strong></td><td>🟨 推荐</td><td>🟧 够用</td><td>🟧 够用</td><td>🟩 卓越</td></tr>
+            </tbody>
+        </table>
+
+        <h2>⚖️ 模型分类解析卡片</h2>
+        <div class="cards">
+            <!-- GPT 5.4 -->
+            <div class="card" style="border-top: 4px solid #10a37f;">
+                <h3 style="color: #10a37f;">GPT 5.4</h3>
+                <div class="tags">By OpenAI</div>
+                <div class="section-title">✅ 核心优势</div>
+                <ul>
+                    <li><strong>逻辑天花板</strong>：复杂算法与多维条件推导最高准确率</li>
+                    <li><strong>最强生态</strong>：工具调用极稳，第三方对接最完善</li>
+                    <li><strong>代码王者</strong>：擅长极其复杂的系统架构重构</li>
+                </ul>
+                <div class="section-title">❌ 核心劣势</div>
+                <ul style="color: var(--text-muted);">
+                    <li>处理大规模长内容的资源占用与成本极高</li>
+                    <li>写作带有强烈的“AI 生成味道”及八股文风</li>
+                </ul>
+            </div>
+
+            <!-- Claude Opus -->
+            <div class="card" style="border-top: 4px solid #d97757;">
+                <h3 style="color: #d97757;">Claude Opus 4.6</h3>
+                <div class="tags">By Anthropic</div>
+                <div class="section-title">✅ 核心优势</div>
+                <ul>
+                    <li><strong>极致语感</strong>：拟人文本共情能力与思辨能力全品类最强</li>
+                    <li><strong>无死角阅读</strong>：极度擅长剖析商业合同、杂乱研报</li>
+                    <li><strong>严谨务实</strong>：数据检视极准，长数据表分析无幻觉</li>
+                </ul>
+                <div class="section-title">❌ 核心劣势</div>
+                <ul style="color: var(--text-muted);">
+                    <li>在纯视觉分析和视频指令上稍显吃力</li>
+                    <li>成本门槛很高，不适合高频日常打杂</li>
+                </ul>
+            </div>
+
+            <!-- Claude Sonnet -->
+            <div class="card" style="border-top: 4px solid #d97757;">
+                <h3 style="color: #d97757;">Claude Sonnet 4.6</h3>
+                <div class="tags">By Anthropic</div>
+                <div class="section-title">✅ 核心优势</div>
+                <ul>
+                    <li><strong>黄金三角</strong>：速度极快、智能极高、全方位性价比之王</li>
+                    <li><strong>键盘神机</strong>：Web开发与代码纠错稳、准、极速</li>
+                    <li><strong>效率中枢</strong>：最完美的商业工作流核心控制大脑</li>
+                </ul>
+                <div class="section-title">❌ 核心劣势</div>
+                <ul style="color: var(--text-muted);">
+                    <li>在遭遇最核心的数学与系统工程难题时逻辑上限不足</li>
+                </ul>
+            </div>
+
+            <!-- Gemini -->
+            <div class="card" style="border-top: 4px solid #1a73e8;">
+                <h3 style="color: #1a73e8;">Gemini 3.1</h3>
+                <div class="tags">By Google</div>
+                <div class="section-title">✅ 核心优势</div>
+                <ul>
+                    <li><strong>原生多模态巅峰</strong>：天生看懂音/视频甚至识别画外音</li>
+                    <li><strong>巨无霸上下文</strong>：强吞数百页乃至数百万字完整代码库</li>
+                    <li><strong>搜索引擎直连</strong>：打通谷歌生态，实时获取世界同步资讯</li>
+                </ul>
+                <div class="section-title">❌ 核心劣势</div>
+                <ul style="color: var(--text-muted);">
+                    <li>处理极长剧本或连贯性写作时，前后逻辑容易散乱丢失</li>
+                    <li>文章表达略偏生硬，缺乏人文温度</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <h2>🎯 一句话选型结论汇总</h2>
+            <ul>
+                <li>💻 <strong>极硬核的代码架构攻坚 / 破解纯逻辑难题</strong> <span>👉 选 GPT 5.4</span></li>
+                <li>✍️ <strong>写走心好文章、公关稿 / 精读晦涩难懂的长文件</strong> <span>👉 选 Claude Opus 4.6</span></li>
+                <li>⚡ <strong>日常打杂 / Cursor 快速结对编程 / 大吞吐流水线</strong> <span>👉 选 Claude Sonnet 4.6</span></li>
+                <li>🎥 <strong>看无字幕视频录音 / 一次吞完一个完整的开源项目</strong> <span>👉 选 Gemini 3.1</span></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
