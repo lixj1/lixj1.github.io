@@ -689,25 +689,13 @@
                             <strong>项目文件清理</strong>
                             <span>只保留一键启动和 1316-305 项目必需内容</span>
                         </a>
-                        <a class="subnav-link" href="#prompt-task-breakdown" data-subnav="prompt-task-breakdown">
-                            <strong>需求梳理与任务拆解</strong>
-                            <span>把模糊需求拆成可执行任务清单</span>
-                        </a>
                         <a class="subnav-link" href="#prompt-codebase-handoff" data-subnav="prompt-codebase-handoff">
                             <strong>旧项目接手与代码读盘</strong>
                             <span>快速读懂启动链路、核心模块和风险点</span>
                         </a>
-                        <a class="subnav-link" href="#prompt-root-cause-debug" data-subnav="prompt-root-cause-debug">
-                            <strong>报错定位与根因分析</strong>
-                            <span>不要只修报错表层，要逼近真正根因</span>
-                        </a>
-                        <a class="subnav-link" href="#prompt-api-mock-data" data-subnav="prompt-api-mock-data">
-                            <strong>接口联调与模拟数据生成</strong>
-                            <span>补齐接口契约、请求示例和可测假数据</span>
-                        </a>
-                        <a class="subnav-link" href="#prompt-frontend-refactor" data-subnav="prompt-frontend-refactor">
-                            <strong>前端页面重构</strong>
-                            <span>在不破坏功能的前提下整理结构和视觉</span>
+                        <a class="subnav-link" href="#prompt-visit-matrix-order" data-subnav="prompt-visit-matrix-order">
+                            <strong>全访视矩阵访视顺序调整</strong>
+                            <span>统一排序、列头日期与计划外标签缩写</span>
                         </a>
                     </aside>
 
@@ -791,60 +779,6 @@
                             </ul>
                         </article>
 
-                        <article class="prompt-card topic-section" id="prompt-task-breakdown">
-                            <div class="eyebrow">Prompt / 需求梳理与任务拆解</div>
-                            <h3 style="margin-top: 16px;">把模糊需求整理成能直接开工的执行清单</h3>
-                            <p class="page-intro">用于把模糊需求整理成可执行的任务清单。</p>
-
-                            <div class="pill-row">
-                                <div class="pill">适用对象：新需求启动</div>
-                                <div class="pill">目标输出：理解摘要 + 开放问题 + 任务清单</div>
-                                <div class="pill">适合放到协作群或工单前置阶段</div>
-                            </div>
-
-                            <div class="prompt-meta">
-                                <div class="panel-lite">
-                                    <strong>适合什么时候用</strong>
-                                    <p>当需求来自口头描述、聊天记录、截图、零散文档，且还没有形成统一执行口径时。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>模型先做什么</strong>
-                                    <p>先总结目标与非目标，再列假设、风险和待确认问题，最后才进入任务拆分。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>避免什么坑</strong>
-                                    <p>避免模型直接脑补需求细节，或者在需求未锁定前就开始拍脑袋设计方案。</p>
-                                </div>
-                            </div>
-
-                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">我现在有一项新需求，但信息比较分散，可能来自聊天记录、口头说明、草稿文档和现有页面。请你不要直接开始实现，而是先帮我完成需求梳理和任务拆解。
-
-请按下面顺序输出：
-1. 用尽量准确的语言总结这次需求到底要解决什么问题。
-2. 明确目标用户、使用场景、约束条件和明显的非目标。
-3. 列出你当前看到的所有假设，不要默认这些假设是真的。
-4. 列出必须先确认的开放问题，并标明如果不确认会带来什么风险。
-5. 在上述内容基础上，把需求拆成可以执行的任务清单，要求每个任务都尽量独立、可验证、可交付。
-6. 对每个任务补充：输入、输出、依赖项、风险点、建议负责人类型。
-7. 最后给出一个建议执行顺序，说明为什么这个顺序更合理。
-
-注意：
-- 不要跳过“理解需求”和“提出问题”这两个阶段
-- 不要在信息不足时擅自补完整个方案
-- 如果需求里有明显冲突的地方，请单独列出来
-- 输出尽量结构化，方便直接转成实施计划或任务单</div>
-
-                            <h4 class="subsection-title">推荐输出形态</h4>
-                            <ul class="prompt-guidance">
-                                <li>需求摘要</li>
-                                <li>假设列表</li>
-                                <li>开放问题</li>
-                                <li>任务拆解清单</li>
-                                <li>优先级和执行顺序</li>
-                            </ul>
-                        </article>
-
                         <article class="prompt-card topic-section" id="prompt-codebase-handoff">
                             <div class="eyebrow">Prompt / 旧项目接手与代码读盘</div>
                             <h3 style="margin-top: 16px;">快速读懂别人留下来的旧项目，而不是在杂乱目录里盲目排查</h3>
@@ -903,174 +837,53 @@
                             </ul>
                         </article>
 
-                        <article class="prompt-card topic-section" id="prompt-root-cause-debug">
-                            <div class="eyebrow">Prompt / 报错定位与根因分析</div>
-                            <h3 style="margin-top: 16px;">遇到报错时，先找根因，不要只补表层</h3>
-                            <p class="page-intro">用于从报错现象收敛到真正根因，而不是只做表层修复。</p>
+                        <article class="prompt-card topic-section" id="prompt-visit-matrix-order">
+                            <div class="eyebrow">Prompt / 全访视矩阵访视顺序调整</div>
+                            <h3 style="margin-top: 16px;">调整全访视矩阵的访视排序、列头日期与计划外标签</h3>
+                            <p class="page-intro">用于修改 Streamlit 医疗数据审阅项目中的全访视矩阵展示逻辑。</p>
 
                             <div class="pill-row">
-                                <div class="pill">适用对象：线上或本地异常排查</div>
-                                <div class="pill">目标输出：根因假设 + 验证步骤 + 修复建议</div>
-                                <div class="pill">适合配合日志和报错栈使用</div>
+                                <div class="pill">适用对象：个体审阅模块</div>
+                                <div class="pill">目标输出：排序调整 + 列头日期 + 趋势图标签优化</div>
+                                <div class="pill">适合数据表与趋势图联动改造</div>
                             </div>
 
                             <div class="prompt-meta">
                                 <div class="panel-lite">
-                                    <strong>模型应该先做什么</strong>
-                                    <p>先区分“现象”“直接触发点”“可能根因”，不要把第一条报错就当最终原因。</p>
+                                    <strong>排序目标</strong>
+                                    <p>所有访视列都按真实检查日期排序，不再把计划外访视强制排到末尾。</p>
                                 </div>
                                 <div class="panel-lite">
-                                    <strong>要补哪些证据</strong>
-                                    <p>报错栈、最近改动、输入数据、运行环境、日志片段、复现步骤，缺任何一个都会影响判断质量。</p>
+                                    <strong>显示目标</strong>
+                                    <p>矩阵列头增加真实日期，趋势图中的计划外访视标签缩短为 UV 或 UV_序号。</p>
                                 </div>
                                 <div class="panel-lite">
-                                    <strong>避免什么坑</strong>
-                                    <p>避免只给“可能是缓存、网络、版本问题”这类空泛答案，而不说明验证路径。</p>
+                                    <strong>涉及范围</strong>
+                                    <p>矩阵列顺序 v_ord、火花线数据 _spark_src、趋势图数据 _trend_rows，以及 _fmt_tick 和列头渲染函数。</p>
                                 </div>
                             </div>
 
                             <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">我现在遇到一个报错或异常现象，请你帮我做根因分析，而不是只给表面修复建议。
+                            <div class="prompt-box">请帮我修改 Streamlit 医疗数据审阅项目中“个体审阅”模块的“全访视矩阵”表格，要求如下：
 
-我会提供：报错信息、日志片段、复现步骤、相关代码、最近改动和运行环境。请你按下面顺序分析：
-1. 先区分当前信息里的“现象”“直接报错点”“潜在根因”，不要把它们混为一谈。
-2. 根据报错栈、调用链、上下文代码和输入条件，列出最可能的 3 到 5 个根因假设。
-3. 对每个根因假设都说明：为什么怀疑它、有哪些证据支持、还缺什么证据。
-4. 给出最小验证步骤，帮助我快速排除错误方向。
-5. 如果最终能收敛到最可能根因，请给出修复建议，并说明这是“根治”还是“临时止血”。
-6. 最后把输出整理成：
-   - 问题现象
-   - 最可能根因
-   - 验证步骤
-   - 修复建议
-   - 风险与回归检查项
+1. 访视列统一按真实日期排序
+把所有涉及访视列排序的地方，包括 v_ord、_spark_src、_trend_rows，统一从 ['_phase_rank', '_date_ord', '_sv', '访视名称'] 改为按 ['_date_ord', '_sv', '访视名称'] 排序。不再区分计划内/计划外，完全尊重真实检查日期。
 
-注意：
-- 不要只根据报错第一行下结论
-- 不要输出过于泛化的废话式排查建议
-- 如果信息不足，请明确指出还需要哪些信息
-- 优先找最可能导致反复复发的问题根因</div>
+2. 矩阵列头显示实际日期
+列头目前只显示访视名称。请在访视名称下方追加一行灰色小字，格式为 YYYY-MM-DD，日期从 _visit_date_map 里取；如果没有日期就不显示，也不要报错。
+
+3. 趋势图计划外访视标签缩写
+修改 _fmt_tick：当访视名称包含“计划外 / unscheduled / 非计划 / 未计划”时，用正则提取其中序号，显示为 UV_01；如果没有序号，就显示 UV。
+
+请先定位相关函数和数据流，再实施修改。输出时列出改动文件、改动函数、修改原因，并给出验证建议。</div>
 
                             <h4 class="subsection-title">推荐输出形态</h4>
                             <ul class="prompt-guidance">
-                                <li>问题现象摘要</li>
-                                <li>根因假设排序</li>
-                                <li>验证步骤清单</li>
-                                <li>最终修复建议</li>
-                                <li>回归测试检查项</li>
-                            </ul>
-                        </article>
-
-                        <article class="prompt-card topic-section" id="prompt-api-mock-data">
-                            <div class="eyebrow">Prompt / 接口联调与模拟数据生成</div>
-                            <h3 style="margin-top: 16px;">接口没好也能推进联调，把契约和假数据先补齐</h3>
-                            <p class="page-intro">用于补齐接口契约、联调样例和可直接使用的 Mock 数据。</p>
-
-                            <div class="pill-row">
-                                <div class="pill">适用对象：前后端联调阶段</div>
-                                <div class="pill">目标输出：接口契约 + Mock 数据 + 边界案例</div>
-                                <div class="pill">适合接口文档不全时补位</div>
-                            </div>
-
-                            <div class="prompt-meta">
-                                <div class="panel-lite">
-                                    <strong>模型先补什么</strong>
-                                    <p>先整理接口目的、字段定义、请求响应结构，再生成可直接用于联调的示例和假数据。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>真正有价值的输出</strong>
-                                    <p>不是一份漂亮的 JSON，而是正常、异常、空状态、边界状态都覆盖到的联调素材。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>常见问题</strong>
-                                    <p>字段命名不统一、状态码语义模糊、分页字段不稳定、列表空态没定义、错误响应没约定。</p>
-                                </div>
-                            </div>
-
-                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">我现在要做接口联调，但接口文档可能不完整，或者后端还没完全准备好。请你帮我先整理接口契约，并生成能用于前端联调和测试的模拟数据。
-
-请按下面顺序输出：
-1. 根据我提供的接口说明、字段草稿、页面需求或已有代码，先总结这个接口要解决什么业务问题。
-2. 列出请求方法、路径、请求参数、响应字段、字段含义、类型、是否必填。
-3. 如果字段定义存在歧义或缺失，请单独列出待确认问题。
-4. 生成以下几类模拟数据：
-   - 正常成功返回
-   - 空数据返回
-   - 边界条件返回
-   - 错误响应返回
-5. 如果适合，请补充前端联调时最需要关注的状态切换，比如 loading、empty、error、partial data。
-6. 最后输出一份结构化联调清单，方便前后端对齐。
-
-注意：
-- 不要只给一份理想化成功数据
-- 字段命名要尽量统一、可落地
-- 如果某些字段明显存在业务歧义，请直接标记出来
-- 优先生成能直接喂给页面调试的示例数据</div>
-
-                            <h4 class="subsection-title">推荐输出形态</h4>
-                            <ul class="prompt-guidance">
-                                <li>接口契约表</li>
-                                <li>待确认字段清单</li>
-                                <li>成功与异常 Mock 数据</li>
-                                <li>页面状态覆盖清单</li>
-                                <li>联调对齐问题列表</li>
-                            </ul>
-                        </article>
-
-                        <article class="prompt-card topic-section" id="prompt-frontend-refactor">
-                            <div class="eyebrow">Prompt / 前端页面重构</div>
-                            <h3 style="margin-top: 16px;">不推翻功能，先把页面结构、样式和可维护性拉回正轨</h3>
-                            <p class="page-intro">用于在不破坏现有功能的前提下整理页面结构与可维护性。</p>
-
-                            <div class="pill-row">
-                                <div class="pill">推荐 skill：frontend-design</div>
-                                <div class="pill">适用对象：老页面重构</div>
-                                <div class="pill">目标输出：重构方案 + 拆分建议 + 风险点</div>
-                            </div>
-
-                            <div class="prompt-meta">
-                                <div class="panel-lite">
-                                    <strong>先稳什么</strong>
-                                    <p>先识别现有页面的核心功能和用户操作链路，确保重构过程中不破坏关键行为。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>再拆什么</strong>
-                                    <p>优先拆重复样式、超长组件、混乱状态管理和无层级的 DOM 结构，再考虑视觉升级。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>避免什么坑</strong>
-                                    <p>避免只做视觉翻新却不解决结构问题，也避免为了“重构漂亮”而一次改动过大导致行为回归。</p>
-                                </div>
-                            </div>
-
-                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">我现在要重构一个已有前端页面。它已经能运行，但结构混乱、样式重复、可维护性差。请你不要直接推翻重写，而是先给我一个稳妥的重构分析和执行建议。
-
-请按下面顺序处理：
-1. 先总结这个页面当前承担的核心功能、主要交互路径和关键状态。
-2. 找出最影响维护性的结构问题，例如：组件过长、样式散落、状态耦合、命名混乱、重复布局、语义结构不清。
-3. 把问题拆成几类：
-   - 必须先修的结构问题
-   - 可以顺手整理的样式问题
-   - 可以后续再做的体验升级项
-4. 给出一个分阶段重构方案，每阶段都说明目标、风险和验收方式。
-5. 如果适合，请给出推荐的组件拆分方式、样式组织方式和命名建议。
-6. 输出时尽量结构化，最后给出“最低风险改造顺序”。
-
-注意：
-- 不要一上来就建议全部重写
-- 优先保证现有功能不回归
-- 如果页面已有明确设计语言，重构时应优先保持一致
-- 如果某些问题只是表象，请继续追到结构根因</div>
-
-                            <h4 class="subsection-title">推荐输出形态</h4>
-                            <ul class="prompt-guidance">
-                                <li>页面职责摘要</li>
-                                <li>结构问题清单</li>
-                                <li>分阶段重构计划</li>
-                                <li>组件拆分建议</li>
-                                <li>最低风险执行顺序</li>
+                                <li>定位到的相关函数与数据流</li>
+                                <li>排序逻辑修改清单</li>
+                                <li>列头渲染修改说明</li>
+                                <li>趋势图标签缩写修改说明</li>
+                                <li>验证步骤与预期结果</li>
                             </ul>
                         </article>
 
