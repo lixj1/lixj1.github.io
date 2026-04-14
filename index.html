@@ -3,356 +3,1218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>顶尖 AI 模型对比与适用场景分析</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>AI-CODING 团队内部经验分享</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f8fafc;
-            --container-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --primary: #3b82f6;
-            --border: #e2e8f0;
-            --excel-bg: #f8fafc;
+            --bg: #f4efe6;
+            --bg-accent: #e2d6c2;
+            --panel: rgba(255, 252, 246, 0.84);
+            --panel-strong: rgba(255, 248, 237, 0.95);
+            --text: #2a211b;
+            --muted: #6f6256;
+            --line: rgba(88, 67, 52, 0.14);
+            --brand: #8b5e34;
+            --brand-deep: #5f3d1e;
+            --accent: #d97757;
+            --shadow: 0 24px 60px rgba(82, 57, 34, 0.12);
+            --radius-xl: 28px;
+            --radius-lg: 20px;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #0f172a;
-                --container-bg: #1e293b;
-                --text-main: #f8fafc;
-                --text-muted: #94a3b8;
-                --border: #334155;
-                --excel-bg: #0f172a;
+                --bg: #161311;
+                --bg-accent: #2a211d;
+                --panel: rgba(31, 25, 22, 0.84);
+                --panel-strong: rgba(38, 30, 26, 0.94);
+                --text: #f4ede4;
+                --muted: #c6b6a6;
+                --line: rgba(245, 223, 198, 0.12);
+                --brand: #f2b880;
+                --brand-deep: #ffe0bf;
+                --accent: #ee8e68;
+                --shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
             }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--bg-color) 0%, #e0e7ff 100%);
-            @media (prefers-color-scheme: dark) {
-                background: linear-gradient(135deg, var(--bg-color) 0%, #1e1b4b 100%);
-            }
-            color: var(--text-main);
-            line-height: 1.6;
             margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
+            min-height: 100vh;
+            color: var(--text);
+            font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(240, 200, 171, 0.55), transparent 28%),
+                radial-gradient(circle at 85% 12%, rgba(217, 119, 87, 0.18), transparent 24%),
+                linear-gradient(135deg, var(--bg) 0%, var(--bg-accent) 100%);
         }
 
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            @media (prefers-color-scheme: dark) {
-                background: rgba(30, 41, 59, 0.85);
-            }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.08;
+            background-image:
+                linear-gradient(rgba(85, 64, 49, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(85, 64, 49, 0.4) 1px, transparent 1px);
+            background-size: 24px 24px;
+            mask-image: radial-gradient(circle at center, black 45%, transparent 85%);
+        }
+
+        .site-shell {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 28px;
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 28px;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 28px;
+            align-self: start;
+            display: grid;
+            gap: 18px;
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-xl);
+            background: var(--panel);
             backdrop-filter: blur(16px);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
-            padding: 48px;
-            border: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        .brand {
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--line);
         }
 
-        h1 {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            background: -webkit-linear-gradient(45deg, #3b82f6, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        h2 {
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-            margin-top: 40px;
-            display: flex;
+        .brand-kicker,
+        .eyebrow {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(139, 94, 52, 0.1);
+            color: var(--brand);
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .brand h1,
+        .hero h2,
+        .section-heading h3,
+        .panel h3,
+        .step-card h3,
+        .prompt-card h3,
+        .subsection-title,
+        .metric-card h4,
+        .summary-item h4 {
+            margin: 0;
+            font-family: "Noto Serif SC", serif;
+            line-height: 1.3;
+        }
+
+        .brand h1 {
+            margin-top: 14px;
+            font-size: 1.9rem;
+        }
+
+        .brand p,
+        .sidebar-note,
+        .muted,
+        .page-intro,
+        .step-copy,
+        .metric-card p,
+        .prompt-card p,
+        .prompt-guidance li,
+        .future-list li,
+        .table-note,
+        .summary-item p,
+        .nav-button span,
+        .subnav-link span {
+            color: var(--muted);
+        }
+
+        .nav-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .nav-button,
+        .subnav-link {
+            width: 100%;
+            border: 1px solid transparent;
+            border-radius: 16px;
+            background: transparent;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            text-decoration: none;
+        }
+
+        .nav-button {
+            display: grid;
+            gap: 4px;
+            padding: 14px 16px;
+        }
+
+        .nav-button strong,
+        .subnav-link strong {
+            font-size: 1rem;
+        }
+
+        .nav-button:hover,
+        .subnav-link:hover,
+        .nav-button.is-active,
+        .subnav-link.is-active {
+            transform: translateX(4px);
+            border-color: var(--line);
+            background: var(--panel-strong);
+        }
+
+        .sidebar-note {
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(139, 94, 52, 0.12), rgba(217, 119, 87, 0.08));
+            border: 1px solid var(--line);
+            font-size: 0.95rem;
+        }
+
+        .page {
+            display: none;
+            animation: rise 0.35s ease;
+        }
+
+        .page.is-active {
+            display: block;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero,
+        .panel,
+        .summary-panel {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-xl);
+            background: var(--panel);
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow);
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 34px;
+            margin-bottom: 24px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: auto -10% -45% auto;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 119, 87, 0.22), transparent 68%);
+        }
+
+        .hero h2 {
+            margin-top: 18px;
+            max-width: 760px;
+            font-size: clamp(2rem, 4vw, 3.3rem);
+        }
+
+        .hero p {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 14px 0 0;
+            font-size: 1.05rem;
+        }
+
+        .metrics,
+        .steps-grid,
+        .summary-grid,
+        .prompt-meta {
+            display: grid;
+            gap: 18px;
+        }
+
+        .metrics {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 24px;
+        }
+
+        .metric-card,
+        .step-card,
+        .prompt-card,
+        .summary-item,
+        .panel-lite {
+            padding: 22px;
+            border-radius: var(--radius-lg);
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .metric-card strong,
+        .panel-lite strong {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--brand);
+            font-size: 0.86rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .metric-card h4 {
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .section-block {
+            margin-bottom: 24px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin: 4px 0 16px;
+        }
+
+        .steps-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .step-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin-bottom: 14px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            color: #fff9f3;
+            font-weight: 700;
+        }
+
+        .step-card p {
+            margin: 12px 0 16px;
+        }
+
+        .step-card img {
+            display: block;
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+
+        .panel {
+            padding: 26px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 16px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
         }
 
         table {
             width: 100%;
+            min-width: 740px;
             border-collapse: collapse;
-            margin: 20px 0;
-            background: var(--container-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            background: var(--panel-strong);
         }
 
-        th, td {
-            padding: 16px;
+        th,
+        td {
+            padding: 16px 14px;
+            border-bottom: 1px solid var(--line);
+            border-right: 1px solid var(--line);
             text-align: center;
-            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        th:last-child,
+        td:last-child {
+            border-right: none;
         }
 
         th {
-            background-color: var(--excel-bg);
-            font-weight: 600;
+            background: rgba(139, 94, 52, 0.08);
+            color: var(--brand-deep);
+            font-weight: 700;
         }
 
-        td:first-child {
+        td:first-child,
+        th:first-child {
             text-align: left;
-            font-weight: 500;
+            min-width: 170px;
         }
 
-        table tr:hover td {
-            background-color: rgba(59, 130, 246, 0.05);
+        tbody tr:hover td {
+            background: rgba(139, 94, 52, 0.05);
         }
 
-        .cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+        .summary-panel {
+            padding: 28px;
             margin-top: 24px;
-        }
-        
-        @media (max-width: 768px) {
-            .cards { grid-template-columns: 1fr; }
-            .container { padding: 24px; }
+            background: linear-gradient(135deg, rgba(95, 61, 30, 0.96), rgba(139, 94, 52, 0.9));
+            color: #fff7ef;
         }
 
-        .card {
-            background: var(--container-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .summary-panel p,
+        .summary-item p {
+            color: rgba(255, 245, 235, 0.84);
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1);
+        .summary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-top: 18px;
         }
 
-        .card h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.4rem;
+        .summary-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: none;
         }
 
-        .tags {
-            margin-top: -10px;
-            margin-bottom: 15px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: inline-block;
-            background: var(--bg-color);
-            padding: 4px 12px;
-            border-radius: 20px;
+        .prompt-layout {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            gap: 20px;
         }
 
-        ul {
-            padding-left: 20px;
+        .subnav-card {
+            position: sticky;
+            top: 28px;
+            align-self: start;
+            padding: 18px;
+            border-radius: var(--radius-lg);
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .subnav-link {
+            display: grid;
+            gap: 4px;
+            padding: 12px 14px;
+            margin-top: 10px;
+        }
+
+        .prompt-card {
             margin-bottom: 20px;
         }
 
-        li {
-            margin-bottom: 8px;
+        .topic-section {
+            display: none;
         }
-        
-        .section-title {
-            font-weight: 600;
-            margin-top: 16px;
-            margin-bottom: 8px;
+
+        .topic-section.is-active {
+            display: block;
+            animation: rise 0.3s ease;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0 0;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(139, 94, 52, 0.08);
+            color: var(--brand-deep);
+            font-size: 0.9rem;
+        }
+
+        .prompt-meta {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin: 18px 0;
+        }
+
+        .subsection-title {
+            margin: 20px 0 12px;
+            font-size: 1.5rem;
+        }
+
+        .prompt-box {
+            padding: 20px;
+            border-radius: 18px;
+            background: #231a16;
+            color: #f8eee1;
+            border: 1px solid rgba(255, 235, 214, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            white-space: pre-wrap;
+            line-height: 1.75;
+            font-family: Consolas, "Courier New", monospace;
             font-size: 0.95rem;
         }
 
-        .summary-box {
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-            color: white;
-            padding: 32px;
-            border-radius: 16px;
-            margin-top: 40px;
-            box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.4);
+        .prompt-guidance,
+        .future-list {
+            margin: 14px 0 0;
+            padding-left: 20px;
         }
-        
-        .summary-box h2 {
-            border: none;
-            color: white;
-            margin-top: 0;
-            margin-bottom: 24px;
+
+        .future-list {
+            columns: 2;
+            column-gap: 28px;
         }
-        
-        .summary-box ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: 16px;
+
+        .footer-note {
+            margin-top: 22px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.92rem;
         }
-        
-        .summary-box li {
-             margin-bottom: 0;
-             font-size: 1.1rem;
-             display: flex;
-             align-items: center;
-             gap: 12px;
-             background: rgba(255,255,255,0.1);
-             padding: 16px;
-             border-radius: 12px;
-             backdrop-filter: blur(4px);
-             transition: background 0.2s;
+
+        @media (max-width: 1120px) {
+            .site-shell,
+            .prompt-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar,
+            .subnav-card {
+                position: static;
+            }
+
+            .metrics,
+            .prompt-meta,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        
-        .summary-box li:hover {
-            background: rgba(255,255,255,0.2);
+
+        @media (max-width: 820px) {
+            .site-shell {
+                padding: 16px;
+                gap: 16px;
+            }
+
+            .hero,
+            .panel,
+            .summary-panel,
+            .sidebar,
+            .metric-card,
+            .step-card,
+            .prompt-card,
+            .panel-lite {
+                padding: 20px;
+            }
+
+            .steps-grid,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .future-list {
+                columns: 1;
+            }
+
+            .section-heading {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🤝 团队大模型使用指南 (入门必读)</h1>
-        <p style="text-align: center; color: var(--text-muted);">本指南旨在帮助协同办公的同事们快速配置好您的专属大模型工作站。</p>
-        
-        <div class="summary-box" style="background: linear-gradient(135deg, #f59e0b 0%, #d97757 100%); margin-top: 20px; box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.4);">
-            <h2 style="margin-top: 0; margin-bottom: 20px; color: white; border: none;">🛠️ 快速配置四部曲</h2>
-            <div style="display: grid; gap: 16px;">
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
-                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">1️⃣ 安装底层工具</h3>
-                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">打开公司系统内部的 <b>软件中心</b>，搜索并获取安装 <strong>Visual Studio Code</strong> 软件。</p>
-                    <img src="step1.png" alt="步骤1：安装VSCode" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+    <div class="site-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-kicker">AI-CODING Docs</div>
+                <h1>团队内部经验分享</h1>
+                <p>发布到 GitHub Pages 的轻量知识站，先承载环境配置与提示词沉淀，后续再持续扩展更多下层内容。</p>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-label">顶层导航</div>
+                <button class="nav-button is-active" type="button" data-page="home">
+                    <strong>首页</strong>
+                    <span>团队大模型使用指南与模型选型</span>
+                </button>
+                <button class="nav-button" type="button" data-page="prompts">
+                    <strong>提示词分享</strong>
+                    <span>按场景沉淀可复用提示词模板</span>
+                </button>
+            </div>
+
+            <div class="sidebar-note">
+                当前结构先保持两层：顶层站点导航 + 提示词页内分层。后续你新增主题时，直接按这个模式继续扩展即可。
+            </div>
+        </aside>
+
+        <main>
+            <section class="page is-active" data-page="home" id="home">
+                <div class="hero">
+                    <div class="eyebrow">首页 / 入门必读</div>
+                    <h2>团队大模型使用指南与 AI-CODING 基础认知</h2>
+                    <p>这一页解决两件事：先让团队快速把 VS Code + GitHub Copilot 配好，再给出主流模型的选型基线，避免团队成员一开始就陷进工具混乱和模型误用。</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
-                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">2️⃣ 导入 AI 插件</h3>
-                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">打开 VSCode，在最左侧点开 <strong>“扩展”图标 (四个小方框)</strong> 并搜索 <code>copilot</code>，安装包含 <strong>GitHub Copilot Chat</strong> 的相关官方插件。</p>
-                    <img src="step2.png" alt="步骤2：安装插件" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+
+                <div class="metrics">
+                    <article class="metric-card">
+                        <strong>文档定位</strong>
+                        <h4>团队统一上手入口</h4>
+                        <p>先统一环境，再统一协作方式，后续所有 Prompt、流程和实践都基于同一工作台展开。</p>
+                    </article>
+                    <article class="metric-card">
+                        <strong>发布方式</strong>
+                        <h4>GitHub Pages 静态站</h4>
+                        <p>无后端、无打包工具、部署简单，适合内部经验文档持续迭代。</p>
+                    </article>
+                    <article class="metric-card">
+                        <strong>页面扩展</strong>
+                        <h4>支持后续多层级沉淀</h4>
+                        <p>当前先落首页与提示词分享页，后续可继续加更多专题和子导航。</p>
+                    </article>
                 </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
-                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">3️⃣ 账号对接授权</h3>
-                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">点击最左下角处的 <strong>账户头像菜单</strong>触发认证，选择使用 <strong>GitHub 登录</strong>，并在弹窗网页里输入 <b>您公司邮箱收到的初始用户名</b> 即可通过。</p>
-                    <img src="step3.png" alt="步骤3：账户登录" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+
+                <section class="panel section-block">
+                    <div class="section-heading">
+                        <div>
+                            <div class="eyebrow">站点维护</div>
+                            <h3>这份 GitHub Pages 文档站应该怎么长期维护</h3>
+                        </div>
+                        <p class="table-note">把首页当作团队共识区，把提示词页当作可复用资产库，后续更新就不会乱。</p>
+                    </div>
+                    <div class="prompt-meta">
+                        <div class="panel-lite">
+                            <strong>首页放什么</strong>
+                            <p>放所有人都要先看到的内容，比如环境配置、模型选型、协作约定和维护方式。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>提示词页放什么</strong>
+                            <p>每个高频任务都沉淀成独立专题，写清楚适用边界、输入要求、期望输出和风险提醒。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>更新节奏</strong>
+                            <p>建议每周补一到两个真实用过的专题，不追求一次写全，只保留团队真正复用得上的内容。</p>
+                        </div>
+                    </div>
+                    <div class="footer-note">推荐维护规则：首页只放稳定共识；提示词页按场景扩充；每个专题都尽量包含“适用场景、Prompt 模板、风险提醒、建议输出形态”。</div>
+                </section>
+
+                <div class="section-block">
+                    <div class="section-heading">
+                        <div>
+                            <div class="eyebrow">环境配置</div>
+                            <h3>四步完成本地 AI-CODING 工作站准备</h3>
+                        </div>
+                        <p class="page-intro">适用于团队同事首次接入 VS Code + GitHub Copilot。内容整理自当前首页文稿，并保留了原有配图。</p>
+                    </div>
+                    <div class="steps-grid">
+                        <article class="step-card">
+                            <div class="step-index">01</div>
+                            <h3>安装工具</h3>
+                            <p class="step-copy">进入公司内部软件中心，搜索并安装 Visual Studio Code，先把团队统一的编辑器底座准备好。</p>
+                            <img src="step1.png" alt="步骤1：安装 VS Code">
+                        </article>
+                        <article class="step-card">
+                            <div class="step-index">02</div>
+                            <h3>安装 AI 插件</h3>
+                            <p class="step-copy">打开 VS Code，进入扩展市场，搜索 copilot，安装官方的 GitHub Copilot Chat 相关插件。</p>
+                            <img src="step2.png" alt="步骤2：安装 GitHub Copilot 插件">
+                        </article>
+                        <article class="step-card">
+                            <div class="step-index">03</div>
+                            <h3>登录与授权</h3>
+                            <p class="step-copy">点击左下角账户入口，使用 GitHub 登录，并按公司分发信息完成授权对接。</p>
+                            <img src="step3.png" alt="步骤3：GitHub 账户登录与授权">
+                        </article>
+                        <article class="step-card">
+                            <div class="step-index">04</div>
+                            <h3>检查是否就绪</h3>
+                            <p class="step-copy">回到主界面后观察右下角状态区域，看到机器人标识即可判断 Copilot 已接入可用。</p>
+                            <img src="step4.png" alt="步骤4：验证 Copilot 状态是否可用">
+                        </article>
+                    </div>
                 </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; backdrop-filter: blur(4px);">
-                    <h3 style="margin-top: 0; color: white; display: flex; align-items: center; gap: 8px;">4️⃣ 状态就绪验收</h3>
-                    <p style="margin: 0 0 16px 0; font-size: 1.05rem;">回到主界面，留意 VSCode 的 <b>最右下角</b>，只要在这里看到一个 <strong>“小机器人”徽标</strong>，即代表模型环境接入完毕！</p>
-                    <img src="step4.png" alt="步骤4：验证状态" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.2);">
+
+                <section class="panel section-block">
+                    <div class="section-heading">
+                        <div>
+                            <div class="eyebrow">模型选型</div>
+                            <h3>顶尖 AI 模型对比与适用场景分析</h3>
+                        </div>
+                        <p class="table-note">给团队一个实用的选择基线：不同模型各有优势，不需要每次从零试错。</p>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>评估维度</th>
+                                    <th>Gemini 3.1</th>
+                                    <th>GPT 5.4</th>
+                                    <th>Claude Opus 4.6</th>
+                                    <th>Claude Sonnet 4.6</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>逻辑与数学推理</strong></td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
+                                <tr><td><strong>创意与长文写作</strong></td><td>🟨 推荐</td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
+                                <tr><td><strong>代码编写与架构</strong></td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟩 卓越</td></tr>
+                                <tr><td><strong>超长文本处理</strong></td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
+                                <tr><td><strong>多模态理解</strong></td><td>🟩 卓越</td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟧 够用</td></tr>
+                                <tr><td><strong>响应速度与执行力</strong></td><td>🟨 推荐</td><td>🟧 够用</td><td>🟧 够用</td><td>🟩 卓越</td></tr>
+                                <tr><td><strong>综合性价比</strong></td><td>🟨 推荐</td><td>🟧 够用</td><td>🟧 够用</td><td>🟩 卓越</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="summary-panel">
+                    <div class="eyebrow">一句话选型</div>
+                    <h3 style="margin-top: 16px;">团队常见任务的快速模型建议</h3>
+                    <div class="summary-grid">
+                        <article class="summary-item">
+                            <h4>GPT 5.4</h4>
+                            <p>适合高难度逻辑推导、复杂代码攻坚和系统级重构。</p>
+                        </article>
+                        <article class="summary-item">
+                            <h4>Claude Opus 4.6</h4>
+                            <p>适合长文润色、复杂文档精读以及更有语感的高级写作。</p>
+                        </article>
+                        <article class="summary-item">
+                            <h4>Claude Sonnet 4.6</h4>
+                            <p>适合日常高频写代码、快速协作和高吞吐流水线任务。</p>
+                        </article>
+                        <article class="summary-item">
+                            <h4>Gemini 3.1</h4>
+                            <p>适合大规模多模态输入、超长上下文阅读与项目级检索。</p>
+                        </article>
+                    </div>
+                </section>
+            </section>
+
+            <section class="page" data-page="prompts" id="prompts">
+                <div class="hero">
+                    <div class="eyebrow">第二页 / 提示词分享</div>
+                    <h2>把团队里真正好用的 Prompt 沉淀成可复用资产</h2>
+                    <p>这一页不只是放几句提示词，而是按场景分层整理，写清楚目标、推荐 skill、适用边界和复制即用的模板。当前先落第一个层级：项目文件清理。</p>
                 </div>
-            </div>
-        </div>
 
-        <hr style="border: none; border-top: 2px dashed var(--border); margin: 60px 0;">
+                <div class="prompt-layout">
+                    <aside class="subnav-card">
+                        <div class="nav-label">第一层级</div>
+                        <a class="subnav-link is-active" href="#prompt-project-cleanup" data-subnav="prompt-project-cleanup">
+                            <strong>项目文件清理</strong>
+                            <span>只保留一键启动和 1316-305 项目必需内容</span>
+                        </a>
+                        <a class="subnav-link" href="#prompt-task-breakdown" data-subnav="prompt-task-breakdown">
+                            <strong>需求梳理与任务拆解</strong>
+                            <span>把模糊需求拆成可执行任务清单</span>
+                        </a>
+                        <a class="subnav-link" href="#prompt-codebase-handoff" data-subnav="prompt-codebase-handoff">
+                            <strong>旧项目接手与代码读盘</strong>
+                            <span>快速读懂启动链路、核心模块和风险点</span>
+                        </a>
+                        <a class="subnav-link" href="#prompt-root-cause-debug" data-subnav="prompt-root-cause-debug">
+                            <strong>报错定位与根因分析</strong>
+                            <span>不要只修报错表层，要逼近真正根因</span>
+                        </a>
+                        <a class="subnav-link" href="#prompt-api-mock-data" data-subnav="prompt-api-mock-data">
+                            <strong>接口联调与模拟数据生成</strong>
+                            <span>补齐接口契约、请求示例和可测假数据</span>
+                        </a>
+                        <a class="subnav-link" href="#prompt-frontend-refactor" data-subnav="prompt-frontend-refactor">
+                            <strong>前端页面重构</strong>
+                            <span>在不破坏功能的前提下整理结构和视觉</span>
+                        </a>
+                    </aside>
 
-        <h1>顶尖 AI 模型对比与适用场景分析</h1>
-        <p style="text-align: center; color: var(--text-muted);">本文档对比了当前最前沿的四大生成式 AI 模型的各项能力及其适配场景。</p>
-        
-        <h2>📊 核心能力热力图</h2>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">评分标准：🟩 卓越 (最佳性能) | 🟨 推荐 (表现优秀) | 🟧 够用 (普通水平)</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>评估维度</th>
-                    <th>Gemini 3.1</th>
-                    <th>GPT 5.4</th>
-                    <th>Claude Opus 4.6</th>
-                    <th>Claude Sonnet 4.6</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>逻辑推理与数学</strong></td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
-                <tr><td><strong>创意与长文写作</strong></td><td>🟨 推荐</td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
-                <tr><td><strong>代码编写与架构</strong></td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟩 卓越</td></tr>
-                <tr><td><strong>超长文本(检索)</strong></td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟩 卓越</td><td>🟨 推荐</td></tr>
-                <tr><td><strong>多模态(图频音)</strong></td><td>🟩 卓越</td><td>🟩 卓越</td><td>🟨 推荐</td><td>🟧 够用</td></tr>
-                <tr><td><strong>响应速度执行力</strong></td><td>🟨 推荐</td><td>🟧 够用</td><td>🟧 够用</td><td>🟩 卓越</td></tr>
-                <tr><td><strong>API综合性价比</strong></td><td>🟨 推荐</td><td>🟧 够用</td><td>🟧 够用</td><td>🟩 卓越</td></tr>
-            </tbody>
-        </table>
+                    <div>
+                        <article class="prompt-card topic-section is-active" id="prompt-project-cleanup">
+                            <div class="eyebrow">Prompt / 项目文件清理</div>
+                            <h3 style="margin-top: 16px;">针对屎山代码仓的保留式整理提示词</h3>
+                            <p class="page-intro">这个 Prompt 适合你当前的需求：让模型先理解目录，再只保留一键启动所需内容、data，以及与 1316-305 项目直接相关的文件，其余测试脚本、历史残留和无关数据全部列入待删除范围。</p>
 
-        <h2>⚖️ 模型分类解析卡片</h2>
-        <div class="cards">
-            <!-- GPT 5.4 -->
-            <div class="card" style="border-top: 4px solid #10a37f;">
-                <h3 style="color: #10a37f;">GPT 5.4</h3>
-                <div class="tags">By OpenAI</div>
-                <div class="section-title">✅ 核心优势</div>
-                <ul>
-                    <li><strong>逻辑天花板</strong>：复杂算法与多维条件推导最高准确率</li>
-                    <li><strong>最强生态</strong>：工具调用极稳，第三方对接最完善</li>
-                    <li><strong>代码王者</strong>：擅长极其复杂的系统架构重构</li>
-                </ul>
-                <div class="section-title">❌ 核心劣势</div>
-                <ul style="color: var(--text-muted);">
-                    <li>处理大规模长内容的资源占用与成本极高</li>
-                    <li>写作带有强烈的“AI 生成味道”及八股文风</li>
-                </ul>
-            </div>
+                            <div class="pill-row">
+                                <div class="pill">推荐 skill：planning-with-files</div>
+                                <div class="pill">适用对象：历史项目整理</div>
+                                <div class="pill">输出目标：保留清单 + 删除建议 + 风险说明</div>
+                            </div>
 
-            <!-- Claude Opus -->
-            <div class="card" style="border-top: 4px solid #d97757;">
-                <h3 style="color: #d97757;">Claude Opus 4.6</h3>
-                <div class="tags">By Anthropic</div>
-                <div class="section-title">✅ 核心优势</div>
-                <ul>
-                    <li><strong>极致语感</strong>：拟人文本共情能力与思辨能力全品类最强</li>
-                    <li><strong>无死角阅读</strong>：极度擅长剖析商业合同、杂乱研报</li>
-                    <li><strong>严谨务实</strong>：数据检视极准，长数据表分析无幻觉</li>
-                </ul>
-                <div class="section-title">❌ 核心劣势</div>
-                <ul style="color: var(--text-muted);">
-                    <li>在纯视觉分析和视频指令上稍显吃力</li>
-                    <li>成本门槛很高，不适合高频日常打杂</li>
-                </ul>
-            </div>
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>你希望模型做到什么</strong>
+                                    <p>先盘点，再判断依赖，再给出删除方案，不要上来就粗暴清空目录。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>保留范围</strong>
+                                    <p>一键启动后的所有必需程序、data 目录、与 1316-305 项目直接相关的文件。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>删除范围</strong>
+                                    <p>测试程序、临时脚本、历史无关数据、与 1316-305 无关的残留资源。</p>
+                                </div>
+                            </div>
 
-            <!-- Claude Sonnet -->
-            <div class="card" style="border-top: 4px solid #d97757;">
-                <h3 style="color: #d97757;">Claude Sonnet 4.6</h3>
-                <div class="tags">By Anthropic</div>
-                <div class="section-title">✅ 核心优势</div>
-                <ul>
-                    <li><strong>黄金三角</strong>：速度极快、智能极高、全方位性价比之王</li>
-                    <li><strong>键盘神机</strong>：Web开发与代码纠错稳、准、极速</li>
-                    <li><strong>效率中枢</strong>：最完美的商业工作流核心控制大脑</li>
-                </ul>
-                <div class="section-title">❌ 核心劣势</div>
-                <ul style="color: var(--text-muted);">
-                    <li>在遭遇最核心的数学与系统工程难题时逻辑上限不足</li>
-                </ul>
-            </div>
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">请帮我整理当前文件夹下的项目代码和数据，只保留目前一键启动后所有程序真正需要的内容，以及 data 目录和与 1316-305 项目直接相关的文件。
 
-            <!-- Gemini -->
-            <div class="card" style="border-top: 4px solid #1a73e8;">
-                <h3 style="color: #1a73e8;">Gemini 3.1</h3>
-                <div class="tags">By Google</div>
-                <div class="section-title">✅ 核心优势</div>
-                <ul>
-                    <li><strong>原生多模态巅峰</strong>：天生看懂音/视频甚至识别画外音</li>
-                    <li><strong>巨无霸上下文</strong>：强吞数百页乃至数百万字完整代码库</li>
-                    <li><strong>搜索引擎直连</strong>：打通谷歌生态，实时获取世界同步资讯</li>
-                </ul>
-                <div class="section-title">❌ 核心劣势</div>
-                <ul style="color: var(--text-muted);">
-                    <li>处理极长剧本或连贯性写作时，前后逻辑容易散乱丢失</li>
-                    <li>文章表达略偏生硬，缺乏人文温度</li>
-                </ul>
-            </div>
-        </div>
+请按下面步骤执行：
+1. 先完整扫描当前目录结构，列出主要文件夹、脚本、配置文件、数据目录和可能的启动入口。
+2. 识别“一键启动”真正依赖的程序、配置、资源文件和数据，不要凭文件名猜，要根据引用关系、导入关系、配置指向和运行路径判断。
+3. 单独识别与 1316-305 项目直接相关的代码、文档、数据和配置。
+4. 把以下内容归为“建议移除或归档”候选：
+   - 与 1316-305 项目无关的数据
+   - 测试用程序、临时脚本、废弃脚本
+   - 重复文件、旧版本备份、无引用资源
+   - 仅用于实验且当前启动流程完全不依赖的内容
+5. 输出结果时必须分成四部分：
+   - 必须保留
+   - 建议归档
+   - 建议删除
+   - 暂时不确定，需人工确认
+6. 每一项都要写出判断依据，尤其说明它和启动流程或 1316-305 项目的关系。
+7. 最后给出一个“最小可运行目录方案”，说明清理后目录建议如何组织。
 
-        <div class="summary-box">
-            <h2>🎯 一句话选型结论汇总</h2>
-            <ul>
-                <li>💻 <strong>极硬核的代码架构攻坚 / 破解纯逻辑难题</strong> <span>👉 选 GPT 5.4</span></li>
-                <li>✍️ <strong>写走心好文章、公关稿 / 精读晦涩难懂的长文件</strong> <span>👉 选 Claude Opus 4.6</span></li>
-                <li>⚡ <strong>日常打杂 / Cursor 快速结对编程 / 大吞吐流水线</strong> <span>👉 选 Claude Sonnet 4.6</span></li>
-                <li>🎥 <strong>看无字幕视频录音 / 一次吞完一个完整的开源项目</strong> <span>👉 选 Gemini 3.1</span></li>
-            </ul>
-        </div>
+注意：
+- 不要直接删除文件
+- 不要在依据不足时武断判断
+- 优先做保留式整理，而不是激进删除
+- 如果发现某些文件看起来无用，但可能被动态加载、配置引用或外部流程依赖，必须标记为“需人工确认”
+- 如果合适，请采用 planning-with-files 这种先规划文件级调整、再执行的工作方式</div>
+
+                            <h4 class="subsection-title">使用提醒</h4>
+                            <ul class="prompt-guidance">
+                                <li>这类任务最怕模型只看文件名，不看真实引用链，所以 Prompt 里已经明确要求按依赖关系判断。</li>
+                                <li>先让模型出清单，再让它根据你的确认逐步移动或删除，风险会小很多。</li>
+                                <li>如果项目里有动态 import、脚本拼路径、配置注入这类机制，一定要保留“需人工确认”这一档。</li>
+                            </ul>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>目录树概览</li>
+                                <li>启动关键链路</li>
+                                <li>1316-305 相关文件清单</li>
+                                <li>可删项与风险等级</li>
+                                <li>最终整理后的目录结构建议</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card topic-section" id="prompt-task-breakdown">
+                            <div class="eyebrow">Prompt / 需求梳理与任务拆解</div>
+                            <h3 style="margin-top: 16px;">把模糊需求整理成能直接开工的执行清单</h3>
+                            <p class="page-intro">这个专题适合需求描述很散、信息来源很多、团队成员理解不一致的时候。目标不是让模型直接写代码，而是先把需求锁定、把假设说清楚，再拆出能执行的任务序列。</p>
+
+                            <div class="pill-row">
+                                <div class="pill">适用对象：新需求启动</div>
+                                <div class="pill">目标输出：理解摘要 + 开放问题 + 任务清单</div>
+                                <div class="pill">适合放到协作群或工单前置阶段</div>
+                            </div>
+
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>适合什么时候用</strong>
+                                    <p>当需求来自口头描述、聊天记录、截图、零散文档，且还没有形成统一执行口径时。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>模型先做什么</strong>
+                                    <p>先总结目标与非目标，再列假设、风险和待确认问题，最后才进入任务拆分。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>避免什么坑</strong>
+                                    <p>避免模型直接脑补需求细节，或者在需求未锁定前就开始拍脑袋设计方案。</p>
+                                </div>
+                            </div>
+
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">我现在有一项新需求，但信息比较分散，可能来自聊天记录、口头说明、草稿文档和现有页面。请你不要直接开始实现，而是先帮我完成需求梳理和任务拆解。
+
+请按下面顺序输出：
+1. 用尽量准确的语言总结这次需求到底要解决什么问题。
+2. 明确目标用户、使用场景、约束条件和明显的非目标。
+3. 列出你当前看到的所有假设，不要默认这些假设是真的。
+4. 列出必须先确认的开放问题，并标明如果不确认会带来什么风险。
+5. 在上述内容基础上，把需求拆成可以执行的任务清单，要求每个任务都尽量独立、可验证、可交付。
+6. 对每个任务补充：输入、输出、依赖项、风险点、建议负责人类型。
+7. 最后给出一个建议执行顺序，说明为什么这个顺序更合理。
+
+注意：
+- 不要跳过“理解需求”和“提出问题”这两个阶段
+- 不要在信息不足时擅自补完整个方案
+- 如果需求里有明显冲突的地方，请单独列出来
+- 输出尽量结构化，方便直接转成实施计划或任务单</div>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>需求摘要</li>
+                                <li>假设列表</li>
+                                <li>开放问题</li>
+                                <li>任务拆解清单</li>
+                                <li>优先级和执行顺序</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card topic-section" id="prompt-codebase-handoff">
+                            <div class="eyebrow">Prompt / 旧项目接手与代码读盘</div>
+                            <h3 style="margin-top: 16px;">快速读懂别人留下来的旧项目，而不是在屎山里乱翻</h3>
+                            <p class="page-intro">这个专题适合接手历史项目、文档缺失项目或者启动流程复杂的项目。重点不是一次性讲完全部代码，而是先建立一张可靠的项目地图，抓住启动链路、核心模块和高风险区域。</p>
+
+                            <div class="pill-row">
+                                <div class="pill">适用对象：历史项目接手</div>
+                                <div class="pill">目标输出：启动链路 + 模块地图 + 风险热点</div>
+                                <div class="pill">适合接手初期快速读盘</div>
+                            </div>
+
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>先看什么</strong>
+                                    <p>先找启动入口、配置文件、环境变量、依赖声明和主流程调用链，不要一开始就全仓库漫游。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>核心输出</strong>
+                                    <p>要拿到项目结构图、关键模块职责、核心数据流、已知风险和仍不明确的区域。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>最常见误区</strong>
+                                    <p>只做文件罗列，不做业务链路解释；或者只看静态结构，不看实际运行入口和配置依赖。</p>
+                                </div>
+                            </div>
+
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">我现在要接手这个旧项目，请你帮我先做“代码读盘”和“接手地图”，目标是在最短时间内理解它如何启动、核心逻辑在哪、哪些地方风险最大。
+
+请按下面步骤分析：
+1. 先识别项目的启动入口、主程序、配置文件、依赖文件和环境变量来源。
+2. 梳理从启动到主功能执行的关键调用链，说明程序是怎么跑起来的。
+3. 根据目录结构和引用关系，总结主要模块分别负责什么。
+4. 找出和业务强相关的核心模块、数据流向、外部依赖、定时任务、脚本入口或批处理入口。
+5. 标记高风险区域，例如：耦合过深、命名混乱、配置分散、重复逻辑、疑似废弃但可能仍在使用的代码。
+6. 输出时分成以下几部分：
+   - 项目启动方式
+   - 核心模块地图
+   - 关键业务链路
+   - 风险热点
+   - 暂不明确、需要人工确认的区域
+   - 建议的接手阅读顺序
+
+注意：
+- 不要只列目录，要解释每个关键部分在系统中的作用
+- 如果有动态加载、脚本拼路径、数据库配置或外部服务依赖，要明确指出
+- 如果发现文档缺失或启动流程不闭合，要直接标成风险项</div>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>项目启动说明</li>
+                                <li>核心目录职责图</li>
+                                <li>主业务流程梳理</li>
+                                <li>高风险模块与接手建议</li>
+                                <li>优先阅读顺序</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card topic-section" id="prompt-root-cause-debug">
+                            <div class="eyebrow">Prompt / 报错定位与根因分析</div>
+                            <h3 style="margin-top: 16px;">遇到报错时，先找根因，不要只补表层</h3>
+                            <p class="page-intro">这个专题适合报错信息很多、现象反复出现、看起来能修但总是复发的情况。重点是让模型从症状、日志、调用链、最近变更和环境差异里收敛出根因，而不是头痛医头。</p>
+
+                            <div class="pill-row">
+                                <div class="pill">适用对象：线上或本地异常排查</div>
+                                <div class="pill">目标输出：根因假设 + 验证步骤 + 修复建议</div>
+                                <div class="pill">适合配合日志和报错栈使用</div>
+                            </div>
+
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>模型应该先做什么</strong>
+                                    <p>先区分“现象”“直接触发点”“可能根因”，不要把第一条报错就当最终原因。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>要补哪些证据</strong>
+                                    <p>报错栈、最近改动、输入数据、运行环境、日志片段、复现步骤，缺任何一个都会影响判断质量。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>避免什么坑</strong>
+                                    <p>避免只给“可能是缓存、网络、版本问题”这类空泛答案，而不说明验证路径。</p>
+                                </div>
+                            </div>
+
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">我现在遇到一个报错或异常现象，请你帮我做根因分析，而不是只给表面修复建议。
+
+我会提供：报错信息、日志片段、复现步骤、相关代码、最近改动和运行环境。请你按下面顺序分析：
+1. 先区分当前信息里的“现象”“直接报错点”“潜在根因”，不要把它们混为一谈。
+2. 根据报错栈、调用链、上下文代码和输入条件，列出最可能的 3 到 5 个根因假设。
+3. 对每个根因假设都说明：为什么怀疑它、有哪些证据支持、还缺什么证据。
+4. 给出最小验证步骤，帮助我快速排除错误方向。
+5. 如果最终能收敛到最可能根因，请给出修复建议，并说明这是“根治”还是“临时止血”。
+6. 最后把输出整理成：
+   - 问题现象
+   - 最可能根因
+   - 验证步骤
+   - 修复建议
+   - 风险与回归检查项
+
+注意：
+- 不要只根据报错第一行下结论
+- 不要输出过于泛化的废话式排查建议
+- 如果信息不足，请明确指出还需要哪些信息
+- 优先找最可能导致反复复发的问题根因</div>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>问题现象摘要</li>
+                                <li>根因假设排序</li>
+                                <li>验证步骤清单</li>
+                                <li>最终修复建议</li>
+                                <li>回归测试检查项</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card topic-section" id="prompt-api-mock-data">
+                            <div class="eyebrow">Prompt / 接口联调与模拟数据生成</div>
+                            <h3 style="margin-top: 16px;">接口没好也能推进联调，把契约和假数据先补齐</h3>
+                            <p class="page-intro">这个专题适合前后端开发节奏不一致、接口文档不全、联调被阻塞的场景。目标是先把字段契约、请求样例、边界情况和可测假数据组织清楚，减少来回扯皮。</p>
+
+                            <div class="pill-row">
+                                <div class="pill">适用对象：前后端联调阶段</div>
+                                <div class="pill">目标输出：接口契约 + Mock 数据 + 边界案例</div>
+                                <div class="pill">适合接口文档不全时补位</div>
+                            </div>
+
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>模型先补什么</strong>
+                                    <p>先整理接口目的、字段定义、请求响应结构，再生成可直接用于联调的示例和假数据。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>真正有价值的输出</strong>
+                                    <p>不是一份漂亮的 JSON，而是正常、异常、空状态、边界状态都覆盖到的联调素材。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>常见问题</strong>
+                                    <p>字段命名不统一、状态码语义模糊、分页字段不稳定、列表空态没定义、错误响应没约定。</p>
+                                </div>
+                            </div>
+
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">我现在要做接口联调，但接口文档可能不完整，或者后端还没完全准备好。请你帮我先整理接口契约，并生成能用于前端联调和测试的模拟数据。
+
+请按下面顺序输出：
+1. 根据我提供的接口说明、字段草稿、页面需求或已有代码，先总结这个接口要解决什么业务问题。
+2. 列出请求方法、路径、请求参数、响应字段、字段含义、类型、是否必填。
+3. 如果字段定义存在歧义或缺失，请单独列出待确认问题。
+4. 生成以下几类模拟数据：
+   - 正常成功返回
+   - 空数据返回
+   - 边界条件返回
+   - 错误响应返回
+5. 如果适合，请补充前端联调时最需要关注的状态切换，比如 loading、empty、error、partial data。
+6. 最后输出一份结构化联调清单，方便前后端对齐。
+
+注意：
+- 不要只给一份理想化成功数据
+- 字段命名要尽量统一、可落地
+- 如果某些字段明显存在业务歧义，请直接标记出来
+- 优先生成能直接喂给页面调试的示例数据</div>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>接口契约表</li>
+                                <li>待确认字段清单</li>
+                                <li>成功与异常 Mock 数据</li>
+                                <li>页面状态覆盖清单</li>
+                                <li>联调对齐问题列表</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card topic-section" id="prompt-frontend-refactor">
+                            <div class="eyebrow">Prompt / 前端页面重构</div>
+                            <h3 style="margin-top: 16px;">不推翻功能，先把页面结构、样式和可维护性拉回正轨</h3>
+                            <p class="page-intro">这个专题适合页面已经能跑，但结构凌乱、样式重复、组件边界不清、后续很难继续改的时候。重点是先稳住现有功能，再按结构、交互、样式和可维护性分层重构。</p>
+
+                            <div class="pill-row">
+                                <div class="pill">推荐 skill：frontend-design</div>
+                                <div class="pill">适用对象：老页面重构</div>
+                                <div class="pill">目标输出：重构方案 + 拆分建议 + 风险点</div>
+                            </div>
+
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>先稳什么</strong>
+                                    <p>先识别现有页面的核心功能和用户操作链路，确保重构过程中不破坏关键行为。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>再拆什么</strong>
+                                    <p>优先拆重复样式、超长组件、混乱状态管理和无层级的 DOM 结构，再考虑视觉升级。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>避免什么坑</strong>
+                                    <p>避免只做视觉翻新却不解决结构问题，也避免为了“重构漂亮”而一次改动过大导致行为回归。</p>
+                                </div>
+                            </div>
+
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">我现在要重构一个已有前端页面。它已经能运行，但结构混乱、样式重复、可维护性差。请你不要直接推翻重写，而是先给我一个稳妥的重构分析和执行建议。
+
+请按下面顺序处理：
+1. 先总结这个页面当前承担的核心功能、主要交互路径和关键状态。
+2. 找出最影响维护性的结构问题，例如：组件过长、样式散落、状态耦合、命名混乱、重复布局、语义结构不清。
+3. 把问题拆成几类：
+   - 必须先修的结构问题
+   - 可以顺手整理的样式问题
+   - 可以后续再做的体验升级项
+4. 给出一个分阶段重构方案，每阶段都说明目标、风险和验收方式。
+5. 如果适合，请给出推荐的组件拆分方式、样式组织方式和命名建议。
+6. 输出时尽量结构化，最后给出“最低风险改造顺序”。
+
+注意：
+- 不要一上来就建议全部重写
+- 优先保证现有功能不回归
+- 如果页面已有明确设计语言，重构时应优先保持一致
+- 如果某些问题只是表象，请继续追到结构根因</div>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>页面职责摘要</li>
+                                <li>结构问题清单</li>
+                                <li>分阶段重构计划</li>
+                                <li>组件拆分建议</li>
+                                <li>最低风险执行顺序</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card">
+                            <div class="eyebrow">后续扩展位</div>
+                            <h3 style="margin-top: 16px;">后面可以继续加的下层提示词专题</h3>
+                            <ul class="future-list">
+                                <li>测试用例补齐</li>
+                                <li>部署脚本整理</li>
+                                <li>日报周报自动生成</li>
+                            </ul>
+                            <div class="footer-note">后续如果你要把每个提示词专题单独做成新页面，也可以继续沿用现在的“顶层导航 + 页内子导航”结构。</div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
+
+    <script>
+        (function () {
+            var pages = document.querySelectorAll('.page');
+            var navButtons = document.querySelectorAll('.nav-button');
+            var subnavLinks = document.querySelectorAll('.subnav-link');
+            var topicSections = document.querySelectorAll('.topic-section');
+            var defaultPromptTopic = 'prompt-project-cleanup';
+
+            function setActivePage(pageName) {
+                pages.forEach(function (page) {
+                    page.classList.toggle('is-active', page.dataset.page === pageName);
+                });
+
+                navButtons.forEach(function (button) {
+                    button.classList.toggle('is-active', button.dataset.page === pageName);
+                });
+            }
+
+            function setActiveSubnav(targetId) {
+                subnavLinks.forEach(function (link) {
+                    link.classList.toggle('is-active', link.dataset.subnav === targetId);
+                });
+            }
+
+            function setActiveTopic(targetId) {
+                topicSections.forEach(function (section) {
+                    section.classList.toggle('is-active', section.id === targetId);
+                });
+            }
+
+            function routeFromHash() {
+                var hash = window.location.hash.replace('#', '');
+
+                if (!hash || hash === 'home') {
+                    setActivePage('home');
+                    return;
+                }
+
+                if (hash === 'prompts') {
+                    setActivePage('prompts');
+                    setActiveSubnav(defaultPromptTopic);
+                    setActiveTopic(defaultPromptTopic);
+                    return;
+                }
+
+                if (hash.indexOf('prompt-') === 0 && document.getElementById(hash)) {
+                    setActivePage('prompts');
+                    setActiveSubnav(hash);
+                    setActiveTopic(hash);
+                    var target = document.getElementById(hash);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    return;
+                }
+
+                setActivePage('home');
+                setActiveSubnav(defaultPromptTopic);
+                setActiveTopic(defaultPromptTopic);
+            }
+
+            navButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    window.location.hash = button.dataset.page;
+                });
+            });
+
+            subnavLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    setActivePage('prompts');
+                    setActiveSubnav(link.dataset.subnav);
+                    setActiveTopic(link.dataset.subnav);
+                });
+            });
+
+            window.addEventListener('hashchange', routeFromHash);
+            routeFromHash();
+        })();
+    </script>
 </body>
 </html>
