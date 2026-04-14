@@ -139,7 +139,6 @@
         .step-copy,
         .prompt-card p,
         .prompt-guidance li,
-        .future-list li,
         .table-note,
         .summary-item p,
         .nav-button span,
@@ -485,23 +484,9 @@
             font-size: 0.95rem;
         }
 
-        .prompt-guidance,
-        .future-list {
+        .prompt-guidance {
             margin: 14px 0 0;
             padding-left: 20px;
-        }
-
-        .future-list {
-            columns: 2;
-            column-gap: 28px;
-        }
-
-        .footer-note {
-            margin-top: 22px;
-            padding-top: 16px;
-            border-top: 1px solid var(--line);
-            color: var(--muted);
-            font-size: 0.92rem;
         }
 
         @media (max-width: 1120px) {
@@ -540,10 +525,6 @@
             .steps-grid,
             .summary-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .future-list {
-                columns: 1;
             }
 
             .section-heading {
@@ -685,13 +666,13 @@
                 <div class="prompt-layout">
                     <aside class="subnav-card">
                         <div class="nav-label">第一层级</div>
-                        <a class="subnav-link is-active" href="#prompt-project-cleanup" data-subnav="prompt-project-cleanup">
+                        <a class="subnav-link is-active" href="#prompt-subject-id-compat" data-subnav="prompt-subject-id-compat">
+                            <strong>受试者/参与者列名兼容改造</strong>
+                            <span>统一主键列名，兼容新旧研究项目数据</span>
+                        </a>
+                        <a class="subnav-link" href="#prompt-project-cleanup" data-subnav="prompt-project-cleanup">
                             <strong>项目文件清理</strong>
                             <span>只保留一键启动和 1316-305 项目必需内容</span>
-                        </a>
-                        <a class="subnav-link" href="#prompt-codebase-handoff" data-subnav="prompt-codebase-handoff">
-                            <strong>旧项目接手与代码读盘</strong>
-                            <span>快速读懂启动链路、核心模块和风险点</span>
                         </a>
                         <a class="subnav-link" href="#prompt-visit-matrix-order" data-subnav="prompt-visit-matrix-order">
                             <strong>全访视矩阵访视顺序调整</strong>
@@ -700,7 +681,71 @@
                     </aside>
 
                     <div>
-                        <article class="prompt-card topic-section is-active" id="prompt-project-cleanup">
+                        <article class="prompt-card topic-section is-active" id="prompt-subject-id-compat">
+                            <div class="eyebrow">Prompt / 受试者与参与者列名兼容改造</div>
+                            <h3 style="margin-top: 16px;">MedReview 项目中主键列名的全局兼容改造</h3>
+                            <p class="page-intro">用于梳理 MedReview 各模块数据流，并统一兼容“受试者代码”“参与者代码”等主键列名变体。</p>
+
+                            <div class="pill-row">
+                                <div class="pill">适用对象：MedReview Python / Streamlit 项目</div>
+                                <div class="pill">目标输出：统一列名入口 + 下游兼容改造</div>
+                                <div class="pill">要求兼容旧数据与新数据</div>
+                            </div>
+
+                            <div class="prompt-meta">
+                                <div class="panel-lite">
+                                    <strong>核心目标</strong>
+                                    <p>先理解模块职责和数据流，再把 subject ID 列统一到一个固定内部列名，避免下游继续硬编码旧列名。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>重点范围</strong>
+                                    <p>优先处理 shared/data_loader.py、app.py 的缓存读取入口，以及独立读 Excel 的 ae_coding.py、gantt_builder.py 等模块。</p>
+                                </div>
+                                <div class="panel-lite">
+                                    <strong>边界约束</strong>
+                                    <p>不要改旧存档文件和离线包目录，不改 Excel/Parquet 本体，只改代码中的列名标准化与引用方式。</p>
+                                </div>
+                            </div>
+
+                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
+                            <div class="prompt-box">这是一个 Python + Streamlit + Pandas 的临床试验医学审阅工具 MedReview。
+
+当前项目多个模块硬编码使用“受试者代码”作为 DataFrame 主键列名，但新接入研究项目的 Excel 数据使用“参与者代码”，导致下游模块运行失败。app.py 主入口已部分做过 rename，但没有和下游模块统一。
+
+请按下面要求完成改造：
+1. 先通读整个项目代码，理解各模块职责、数据加载入口和主数据流。
+2. 让代码全局兼容这些 subject ID 列名变体：受试者代码、参与者代码、受试者编号、参与者编号、Subject ID、Participant ID，以及你发现的其他同类变体。
+3. 推荐在 shared/data_loader.py 的 load_study_data() 附近新增 normalize_subject_col() 工具函数，把所有 DataFrame 的 subject ID 列统一 rename 为同一个内部列名，然后下游统一使用这个内部列名。
+4. app.py 中 _cached_read_excel_sheet() 的现有标准化逻辑也要对齐到同一个内部列名。
+5. 对于独立从 Excel 读取数据的模块，例如 shared/ae_coding.py、gantt_builder.py，也要在读取后执行同样的标准化。
+6. 只改代码里的列名引用逻辑，例如 df['受试者代码']、df[df['受试者代码'] == id]、'受试者代码' in df.columns 这类判断；UI 显示文案里的“受试者”可以不改，或按需要统一成“参与者”。
+
+约束：
+- 不要改动这些旧存档文件：app_v1_checkpoint.py、app_v2_mobile_checkpoint.py、old_mob_ui.py、old3.py、old22.py、old_new.py、old2.py，以及 _offline_pkg/ 目录
+- 必须向后兼容旧数据和新数据
+- 不要改动 Excel、Parquet 等数据文件本身
+- 区分运行逻辑中的列名引用和 UI 文本/注释，优先保证运行逻辑兼容
+
+验证要求：
+- 改完后分别用旧数据和新数据验证个体审阅、群体审阅、中心比较、Query 引擎、甘特图、移动端流程是否正常
+
+输出要求：
+- 先列出定位到的主数据加载入口、独立读表模块和受影响范围
+- 再给出你的统一列名方案
+- 说明每个修改文件、修改函数、修改原因
+- 最后给出验证步骤、风险点和仍需人工确认的地方</div>
+
+                            <h4 class="subsection-title">推荐输出形态</h4>
+                            <ul class="prompt-guidance">
+                                <li>主数据加载入口与数据流梳理</li>
+                                <li>subject ID 列名标准化方案</li>
+                                <li>受影响模块与修改清单</li>
+                                <li>兼容性风险与人工确认项</li>
+                                <li>旧数据 / 新数据验证步骤</li>
+                            </ul>
+                        </article>
+
+                        <article class="prompt-card topic-section" id="prompt-project-cleanup">
                             <div class="eyebrow">Prompt / 项目文件清理</div>
                             <h3 style="margin-top: 16px;">针对历史项目目录的保留式整理提示词</h3>
                             <p class="page-intro">用于整理历史项目目录，只保留运行必需内容与核心数据。</p>
@@ -779,64 +824,6 @@
                             </ul>
                         </article>
 
-                        <article class="prompt-card topic-section" id="prompt-codebase-handoff">
-                            <div class="eyebrow">Prompt / 旧项目接手与代码读盘</div>
-                            <h3 style="margin-top: 16px;">快速读懂别人留下来的旧项目，而不是在杂乱目录里盲目排查</h3>
-                            <p class="page-intro">用于快速读懂旧项目的启动链路、模块结构和风险点。</p>
-
-                            <div class="pill-row">
-                                <div class="pill">适用对象：历史项目接手</div>
-                                <div class="pill">目标输出：启动链路 + 模块地图 + 风险热点</div>
-                                <div class="pill">适合接手初期快速读盘</div>
-                            </div>
-
-                            <div class="prompt-meta">
-                                <div class="panel-lite">
-                                    <strong>先看什么</strong>
-                                    <p>先找启动入口、配置文件、环境变量、依赖声明和主流程调用链，不要一开始就全仓库漫游。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>核心输出</strong>
-                                    <p>要拿到项目结构图、关键模块职责、核心数据流、已知风险和仍不明确的区域。</p>
-                                </div>
-                                <div class="panel-lite">
-                                    <strong>最常见误区</strong>
-                                    <p>只做文件罗列，不做业务链路解释；或者只看静态结构，不看实际运行入口和配置依赖。</p>
-                                </div>
-                            </div>
-
-                            <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">我现在要接手这个旧项目，请你帮我先做“代码读盘”和“接手地图”，目标是在最短时间内理解它如何启动、核心逻辑在哪、哪些地方风险最大。
-
-请按下面步骤分析：
-1. 先识别项目的启动入口、主程序、配置文件、依赖文件和环境变量来源。
-2. 梳理从启动到主功能执行的关键调用链，说明程序是怎么跑起来的。
-3. 根据目录结构和引用关系，总结主要模块分别负责什么。
-4. 找出和业务强相关的核心模块、数据流向、外部依赖、定时任务、脚本入口或批处理入口。
-5. 标记高风险区域，例如：耦合过深、命名混乱、配置分散、重复逻辑、疑似废弃但可能仍在使用的代码。
-6. 输出时分成以下几部分：
-   - 项目启动方式
-   - 核心模块地图
-   - 关键业务链路
-   - 风险热点
-   - 暂不明确、需要人工确认的区域
-   - 建议的接手阅读顺序
-
-注意：
-- 不要只列目录，要解释每个关键部分在系统中的作用
-- 如果有动态加载、脚本拼路径、数据库配置或外部服务依赖，要明确指出
-- 如果发现文档缺失或启动流程不闭合，要直接标成风险项</div>
-
-                            <h4 class="subsection-title">推荐输出形态</h4>
-                            <ul class="prompt-guidance">
-                                <li>项目启动说明</li>
-                                <li>核心目录职责图</li>
-                                <li>主业务流程梳理</li>
-                                <li>高风险模块与接手建议</li>
-                                <li>优先阅读顺序</li>
-                            </ul>
-                        </article>
-
                         <article class="prompt-card topic-section" id="prompt-visit-matrix-order">
                             <div class="eyebrow">Prompt / 全访视矩阵访视顺序调整</div>
                             <h3 style="margin-top: 16px;">调整全访视矩阵的访视排序、列头日期与计划外标签</h3>
@@ -886,17 +873,6 @@
                                 <li>验证步骤与预期结果</li>
                             </ul>
                         </article>
-
-                        <article class="prompt-card">
-                            <div class="eyebrow">后续扩展位</div>
-                            <h3 style="margin-top: 16px;">后面可以继续加的下层提示词专题</h3>
-                            <ul class="future-list">
-                                <li>测试用例补齐</li>
-                                <li>部署脚本整理</li>
-                                <li>日报周报自动生成</li>
-                            </ul>
-                            <div class="footer-note">后续如果你要把每个提示词专题单独做成新页面，也可以继续沿用现在的“顶层导航 + 页内子导航”结构。</div>
-                        </article>
                     </div>
                 </div>
             </section>
@@ -909,7 +885,7 @@
             var navButtons = document.querySelectorAll('.nav-button');
             var subnavLinks = document.querySelectorAll('.subnav-link');
             var topicSections = document.querySelectorAll('.topic-section');
-            var defaultPromptTopic = 'prompt-project-cleanup';
+            var defaultPromptTopic = 'prompt-subject-id-compat';
 
             function setActivePage(pageName) {
                 pages.forEach(function (page) {
