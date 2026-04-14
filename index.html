@@ -667,27 +667,27 @@
                     <aside class="subnav-card">
                         <div class="nav-label">第一层级</div>
                         <a class="subnav-link is-active" href="#prompt-subject-id-compat" data-subnav="prompt-subject-id-compat">
-                            <strong>受试者/参与者列名兼容改造</strong>
-                            <span>统一主键列名，兼容新旧研究项目数据</span>
+                            <strong>受试者/参与者列名兼容</strong>
+                            <span>统一主键列名与数据兼容</span>
                         </a>
                         <a class="subnav-link" href="#prompt-project-cleanup" data-subnav="prompt-project-cleanup">
-                            <strong>项目文件清理</strong>
-                            <span>只保留一键启动和 1316-305 项目必需内容</span>
+                            <strong>项目目录清理</strong>
+                            <span>保留运行必需内容</span>
                         </a>
                         <a class="subnav-link" href="#prompt-visit-matrix-order" data-subnav="prompt-visit-matrix-order">
-                            <strong>全访视矩阵访视顺序调整</strong>
-                            <span>统一排序、列头日期与计划外标签缩写</span>
+                            <strong>全访视矩阵调整</strong>
+                            <span>排序、列头与标签统一调整</span>
                         </a>
                     </aside>
 
                     <div>
                         <article class="prompt-card topic-section is-active" id="prompt-subject-id-compat">
                             <div class="eyebrow">Prompt / 受试者与参与者列名兼容改造</div>
-                            <h3 style="margin-top: 16px;">MedReview 项目中主键列名的全局兼容改造</h3>
-                            <p class="page-intro">用于梳理 MedReview 各模块数据流，并统一兼容“受试者代码”“参与者代码”等主键列名变体。</p>
+                            <h3 style="margin-top: 16px;">主键列名兼容改造</h3>
+                            <p class="page-intro">统一兼容“受试者代码”“参与者代码”等主键列名变体。</p>
 
                             <div class="pill-row">
-                                <div class="pill">适用对象：MedReview Python / Streamlit 项目</div>
+                                <div class="pill">适用对象：Python / Streamlit / Pandas 项目</div>
                                 <div class="pill">目标输出：统一列名入口 + 下游兼容改造</div>
                                 <div class="pill">要求兼容旧数据与新数据</div>
                             </div>
@@ -708,32 +708,28 @@
                             </div>
 
                             <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">这是一个 Python + Streamlit + Pandas 的临床试验医学审阅工具 MedReview。
+                            <div class="prompt-box">这是一个 Python + Streamlit + Pandas 项目。当前各模块大量硬编码“受试者代码”作为 DataFrame 主键列名，但新数据使用“参与者代码”，导致下游流程断裂。
 
-当前项目多个模块硬编码使用“受试者代码”作为 DataFrame 主键列名，但新接入研究项目的 Excel 数据使用“参与者代码”，导致下游模块运行失败。app.py 主入口已部分做过 rename，但没有和下游模块统一。
-
-请按下面要求完成改造：
-1. 先通读整个项目代码，理解各模块职责、数据加载入口和主数据流。
-2. 让代码全局兼容这些 subject ID 列名变体：受试者代码、参与者代码、受试者编号、参与者编号、Subject ID、Participant ID，以及你发现的其他同类变体。
-3. 推荐在 shared/data_loader.py 的 load_study_data() 附近新增 normalize_subject_col() 工具函数，把所有 DataFrame 的 subject ID 列统一 rename 为同一个内部列名，然后下游统一使用这个内部列名。
-4. app.py 中 _cached_read_excel_sheet() 的现有标准化逻辑也要对齐到同一个内部列名。
-5. 对于独立从 Excel 读取数据的模块，例如 shared/ae_coding.py、gantt_builder.py，也要在读取后执行同样的标准化。
-6. 只改代码里的列名引用逻辑，例如 df['受试者代码']、df[df['受试者代码'] == id]、'受试者代码' in df.columns 这类判断；UI 显示文案里的“受试者”可以不改，或按需要统一成“参与者”。
+请先通读项目，理清模块职责、数据加载入口和主数据流，然后完成以下改造：
+1. 全局兼容这些列名变体：受试者代码、参与者代码、受试者编号、参与者编号、Subject ID、Participant ID，以及你发现的其他同类变体。
+2. 推荐在 shared/data_loader.py 的 load_study_data() 附近新增 normalize_subject_col()，把所有 DataFrame 统一 rename 成同一个内部列名，下游只使用这个统一名。
+3. app.py 中 _cached_read_excel_sheet() 的标准化逻辑也要对齐到同一个内部列名。
+4. 对独立读 Excel 的模块，如 shared/ae_coding.py、gantt_builder.py，也要在读取后执行同样的标准化。
+5. 重点修改列名引用逻辑，如 df['受试者代码']、df[df['受试者代码'] == id]、'受试者代码' in df.columns；UI 文案里的“受试者”可不改。
 
 约束：
-- 不要改动这些旧存档文件：app_v1_checkpoint.py、app_v2_mobile_checkpoint.py、old_mob_ui.py、old3.py、old22.py、old_new.py、old2.py，以及 _offline_pkg/ 目录
-- 必须向后兼容旧数据和新数据
-- 不要改动 Excel、Parquet 等数据文件本身
-- 区分运行逻辑中的列名引用和 UI 文本/注释，优先保证运行逻辑兼容
+- 不要改动 app_v1_checkpoint.py、app_v2_mobile_checkpoint.py、old_mob_ui.py、old3.py、old22.py、old_new.py、old2.py 和 _offline_pkg/
+- 必须同时兼容旧数据和新数据
+- 不要改 Excel / Parquet 数据文件本身
 
-验证要求：
-- 改完后分别用旧数据和新数据验证个体审阅、群体审阅、中心比较、Query 引擎、甘特图、移动端流程是否正常
+验证：
+- 分别用旧数据和新数据验证个体审阅、群体审阅、中心比较、Query 引擎、甘特图、移动端是否正常
 
-输出要求：
-- 先列出定位到的主数据加载入口、独立读表模块和受影响范围
-- 再给出你的统一列名方案
-- 说明每个修改文件、修改函数、修改原因
-- 最后给出验证步骤、风险点和仍需人工确认的地方</div>
+输出时请给出：
+- 主数据加载入口、独立读表模块和受影响范围
+- 统一列名方案
+- 改动文件、改动函数、修改原因
+- 验证步骤、风险点和需人工确认项</div>
 
                             <h4 class="subsection-title">推荐输出形态</h4>
                             <ul class="prompt-guidance">
@@ -747,8 +743,8 @@
 
                         <article class="prompt-card topic-section" id="prompt-project-cleanup">
                             <div class="eyebrow">Prompt / 项目文件清理</div>
-                            <h3 style="margin-top: 16px;">针对历史项目目录的保留式整理提示词</h3>
-                            <p class="page-intro">用于整理历史项目目录，只保留运行必需内容与核心数据。</p>
+                            <h3 style="margin-top: 16px;">项目目录保留式清理</h3>
+                            <p class="page-intro">只保留运行必需内容与核心数据。</p>
 
                             <div class="pill-row">
                                 <div class="pill">推荐 skill：planning-with-files</div>
@@ -772,31 +768,29 @@
                             </div>
 
                             <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">请帮我整理当前文件夹下的项目代码和数据，只保留目前一键启动后所有程序真正需要的内容，以及 data 目录和与 1316-305 项目直接相关的文件。
+                                     <div class="prompt-box">请帮我整理当前项目目录，只保留一键启动真正依赖的程序、data 目录，以及与 1316-305 项目直接相关的文件。
 
-请按下面步骤执行：
-1. 先完整扫描当前目录结构，列出主要文件夹、脚本、配置文件、数据目录和可能的启动入口。
-2. 识别“一键启动”真正依赖的程序、配置、资源文件和数据，不要凭文件名猜，要根据引用关系、导入关系、配置指向和运行路径判断。
-3. 单独识别与 1316-305 项目直接相关的代码、文档、数据和配置。
-4. 把以下内容归为“建议移除或归档”候选：
-   - 与 1316-305 项目无关的数据
-   - 测试用程序、临时脚本、废弃脚本
-   - 重复文件、旧版本备份、无引用资源
-   - 仅用于实验且当前启动流程完全不依赖的内容
-5. 输出结果时必须分成四部分：
-   - 必须保留
-   - 建议归档
-   - 建议删除
-   - 暂时不确定，需人工确认
-6. 每一项都要写出判断依据，尤其说明它和启动流程或 1316-305 项目的关系。
-7. 最后给出一个“最小可运行目录方案”，说明清理后目录建议如何组织。
+请先完整扫描目录，再完成以下工作：
+1. 识别启动入口、核心脚本、配置文件、资源文件和数据目录，并根据引用关系、导入关系、配置指向和运行路径判断真实依赖。
+2. 单独梳理与 1316-305 项目直接相关的代码、文档、数据和配置。
+3. 把无关数据、测试程序、临时脚本、废弃脚本、重复文件、旧备份、无引用资源等内容列为“建议归档或删除”候选。
+4. 输出时分成：必须保留、建议归档、建议删除、暂不确定需人工确认。
+5. 每一项都要写清判断依据，尤其说明它与启动流程或 1316-305 项目的关系。
+6. 最后给出一个“最小可运行目录方案”。
 
-注意：
+约束：
 - 不要直接删除文件
-- 不要在依据不足时武断判断
-- 优先做保留式整理，而不是激进删除
-- 如果发现某些文件看起来无用，但可能被动态加载、配置引用或外部流程依赖，必须标记为“需人工确认”
-- 如果合适，请采用 planning-with-files 这种先规划文件级调整、再执行的工作方式</div>
+- 不要仅凭文件名判断
+- 优先保留式整理，而不是激进删除
+- 如存在动态加载、配置引用、脚本拼路径或外部流程依赖，必须标记为“需人工确认”
+- 如果合适，请采用 planning-with-files 这种先规划文件级调整、再执行的方式
+
+输出时请给出：
+- 目录树概览
+- 启动关键链路
+- 1316-305 相关文件清单
+- 可删项与风险等级
+- 整理后的目录结构建议</div>
 
                             <h4 class="subsection-title">使用提醒</h4>
                             <ul class="prompt-guidance">
@@ -826,8 +820,8 @@
 
                         <article class="prompt-card topic-section" id="prompt-visit-matrix-order">
                             <div class="eyebrow">Prompt / 全访视矩阵访视顺序调整</div>
-                            <h3 style="margin-top: 16px;">调整全访视矩阵的访视排序、列头日期与计划外标签</h3>
-                            <p class="page-intro">用于修改 Streamlit 医疗数据审阅项目中的全访视矩阵展示逻辑。</p>
+                            <h3 style="margin-top: 16px;">全访视矩阵展示调整</h3>
+                            <p class="page-intro">统一排序、列头日期与计划外访视标签显示。</p>
 
                             <div class="pill-row">
                                 <div class="pill">适用对象：个体审阅模块</div>
@@ -851,18 +845,22 @@
                             </div>
 
                             <h4 class="subsection-title">可直接复制的 Prompt</h4>
-                            <div class="prompt-box">请帮我修改 Streamlit 医疗数据审阅项目中“个体审阅”模块的“全访视矩阵”表格，要求如下：
+                            <div class="prompt-box">请帮我修改“个体审阅”模块中的“全访视矩阵”表格，先定位相关函数和数据流，再完成以下改造：
 
 1. 访视列统一按真实日期排序
-把所有涉及访视列排序的地方，包括 v_ord、_spark_src、_trend_rows，统一从 ['_phase_rank', '_date_ord', '_sv', '访视名称'] 改为按 ['_date_ord', '_sv', '访视名称'] 排序。不再区分计划内/计划外，完全尊重真实检查日期。
+把所有涉及访视列排序的地方，包括 v_ord、_spark_src、_trend_rows，统一从 ['_phase_rank', '_date_ord', '_sv', '访视名称'] 改为按 ['_date_ord', '_sv', '访视名称'] 排序，不再强制把计划外访视排到末尾。
 
 2. 矩阵列头显示实际日期
-列头目前只显示访视名称。请在访视名称下方追加一行灰色小字，格式为 YYYY-MM-DD，日期从 _visit_date_map 里取；如果没有日期就不显示，也不要报错。
+在访视名称下方追加一行灰色小字，格式为 YYYY-MM-DD；日期从 _visit_date_map 获取，没有日期就不显示，也不要报错。
 
 3. 趋势图计划外访视标签缩写
-修改 _fmt_tick：当访视名称包含“计划外 / unscheduled / 非计划 / 未计划”时，用正则提取其中序号，显示为 UV_01；如果没有序号，就显示 UV。
+修改 _fmt_tick：当访视名称包含“计划外 / unscheduled / 非计划 / 未计划”时，提取其中序号并显示为 UV_01；没有序号就显示 UV。
 
-请先定位相关函数和数据流，再实施修改。输出时列出改动文件、改动函数、修改原因，并给出验证建议。</div>
+输出时请给出：
+- 定位到的相关函数与数据流
+- 改动文件、改动函数、修改原因
+- 排序逻辑、列头渲染、标签缩写的修改说明
+- 验证步骤与预期结果</div>
 
                             <h4 class="subsection-title">推荐输出形态</h4>
                             <ul class="prompt-guidance">
