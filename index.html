@@ -550,23 +550,19 @@
             <div class="brand">
                 <div class="brand-kicker">AI-CODING Docs</div>
                 <h1>团队内部经验分享</h1>
-                <p>发布到 GitHub Pages 的轻量知识站，先承载环境配置与提示词沉淀，后续再持续扩展更多下层内容。</p>
+                <p>团队环境配置与 Prompt 经验沉淀。</p>
             </div>
 
             <div class="nav-group">
                 <div class="nav-label">顶层导航</div>
                 <button class="nav-button is-active" type="button" data-page="home">
                     <strong>首页</strong>
-                    <span>团队大模型使用指南与模型选型</span>
+                    <span>环境配置与模型选型</span>
                 </button>
                 <button class="nav-button" type="button" data-page="prompts">
                     <strong>提示词分享</strong>
-                    <span>按场景沉淀可复用提示词模板</span>
+                    <span>场景化 Prompt 模板</span>
                 </button>
-            </div>
-
-            <div class="sidebar-note">
-                当前结构先保持两层：顶层站点导航 + 提示词页内分层。后续你新增主题时，直接按这个模式继续扩展即可。
             </div>
         </aside>
 
@@ -675,7 +671,7 @@
                 <div class="hero">
                     <div class="eyebrow">第二页 / 提示词分享</div>
                     <h2>把团队里真正好用的 Prompt 沉淀成可复用资产</h2>
-                    <p>这一页不只是放几句提示词，而是按场景分层整理，写清楚目标、推荐 skill、适用边界和复制即用的模板。当前先落第一个层级：项目文件清理。</p>
+                    <p>按场景整理可直接复用的 Prompt 模板。</p>
                 </div>
 
                 <div class="prompt-layout">
@@ -710,8 +706,8 @@
                     <div>
                         <article class="prompt-card topic-section is-active" id="prompt-project-cleanup">
                             <div class="eyebrow">Prompt / 项目文件清理</div>
-                            <h3 style="margin-top: 16px;">针对屎山代码仓的保留式整理提示词</h3>
-                            <p class="page-intro">这个 Prompt 适合你当前的需求：让模型先理解目录，再只保留一键启动所需内容、data，以及与 1316-305 项目直接相关的文件，其余测试脚本、历史残留和无关数据全部列入待删除范围。</p>
+                            <h3 style="margin-top: 16px;">针对历史项目目录的保留式整理提示词</h3>
+                            <p class="page-intro">用于整理历史项目目录，只保留运行必需内容与核心数据。</p>
 
                             <div class="pill-row">
                                 <div class="pill">推荐 skill：planning-with-files</div>
@@ -768,6 +764,15 @@
                                 <li>如果项目里有动态 import、脚本拼路径、配置注入这类机制，一定要保留“需人工确认”这一档。</li>
                             </ul>
 
+                            <h4 class="subsection-title">如何使用 Skill</h4>
+                            <ul class="prompt-guidance">
+                                <li>把 planning-with-files 整个文件夹放到当前项目的 .copilot/skills 目录下。</li>
+                                <li>推荐目录结构：.copilot/skills/planning-with-files/SKILL.md。</li>
+                                <li>打开 VS Code 的 Copilot 对话后，直接说明“请使用 planning-with-files 帮我先做文件级整理规划”。</li>
+                                <li>如果当前环境支持 slash 形式，也可以直接尝试输入 /planning-with-files。</li>
+                                <li>团队分享时不要只发 SKILL.md，最好把整个 planning-with-files 文件夹一起发给大家，避免示例或模板缺失。</li>
+                            </ul>
+
                             <h4 class="subsection-title">推荐输出形态</h4>
                             <ul class="prompt-guidance">
                                 <li>目录树概览</li>
@@ -781,7 +786,7 @@
                         <article class="prompt-card topic-section" id="prompt-task-breakdown">
                             <div class="eyebrow">Prompt / 需求梳理与任务拆解</div>
                             <h3 style="margin-top: 16px;">把模糊需求整理成能直接开工的执行清单</h3>
-                            <p class="page-intro">这个专题适合需求描述很散、信息来源很多、团队成员理解不一致的时候。目标不是让模型直接写代码，而是先把需求锁定、把假设说清楚，再拆出能执行的任务序列。</p>
+                            <p class="page-intro">用于把模糊需求整理成可执行的任务清单。</p>
 
                             <div class="pill-row">
                                 <div class="pill">适用对象：新需求启动</div>
@@ -834,8 +839,8 @@
 
                         <article class="prompt-card topic-section" id="prompt-codebase-handoff">
                             <div class="eyebrow">Prompt / 旧项目接手与代码读盘</div>
-                            <h3 style="margin-top: 16px;">快速读懂别人留下来的旧项目，而不是在屎山里乱翻</h3>
-                            <p class="page-intro">这个专题适合接手历史项目、文档缺失项目或者启动流程复杂的项目。重点不是一次性讲完全部代码，而是先建立一张可靠的项目地图，抓住启动链路、核心模块和高风险区域。</p>
+                            <h3 style="margin-top: 16px;">快速读懂别人留下来的旧项目，而不是在杂乱目录里盲目排查</h3>
+                            <p class="page-intro">用于快速读懂旧项目的启动链路、模块结构和风险点。</p>
 
                             <div class="pill-row">
                                 <div class="pill">适用对象：历史项目接手</div>
@@ -893,7 +898,7 @@
                         <article class="prompt-card topic-section" id="prompt-root-cause-debug">
                             <div class="eyebrow">Prompt / 报错定位与根因分析</div>
                             <h3 style="margin-top: 16px;">遇到报错时，先找根因，不要只补表层</h3>
-                            <p class="page-intro">这个专题适合报错信息很多、现象反复出现、看起来能修但总是复发的情况。重点是让模型从症状、日志、调用链、最近变更和环境差异里收敛出根因，而不是头痛医头。</p>
+                            <p class="page-intro">用于从报错现象收敛到真正根因，而不是只做表层修复。</p>
 
                             <div class="pill-row">
                                 <div class="pill">适用对象：线上或本地异常排查</div>
@@ -951,7 +956,7 @@
                         <article class="prompt-card topic-section" id="prompt-api-mock-data">
                             <div class="eyebrow">Prompt / 接口联调与模拟数据生成</div>
                             <h3 style="margin-top: 16px;">接口没好也能推进联调，把契约和假数据先补齐</h3>
-                            <p class="page-intro">这个专题适合前后端开发节奏不一致、接口文档不全、联调被阻塞的场景。目标是先把字段契约、请求样例、边界情况和可测假数据组织清楚，减少来回扯皮。</p>
+                            <p class="page-intro">用于补齐接口契约、联调样例和可直接使用的 Mock 数据。</p>
 
                             <div class="pill-row">
                                 <div class="pill">适用对象：前后端联调阶段</div>
@@ -1008,7 +1013,7 @@
                         <article class="prompt-card topic-section" id="prompt-frontend-refactor">
                             <div class="eyebrow">Prompt / 前端页面重构</div>
                             <h3 style="margin-top: 16px;">不推翻功能，先把页面结构、样式和可维护性拉回正轨</h3>
-                            <p class="page-intro">这个专题适合页面已经能跑，但结构凌乱、样式重复、组件边界不清、后续很难继续改的时候。重点是先稳住现有功能，再按结构、交互、样式和可维护性分层重构。</p>
+                            <p class="page-intro">用于在不破坏现有功能的前提下整理页面结构与可维护性。</p>
 
                             <div class="pill-row">
                                 <div class="pill">推荐 skill：frontend-design</div>
