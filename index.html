@@ -121,7 +121,6 @@
         .step-card h3,
         .prompt-card h3,
         .subsection-title,
-        .metric-card h4,
         .summary-item h4 {
             margin: 0;
             font-family: "Noto Serif SC", serif;
@@ -138,7 +137,6 @@
         .muted,
         .page-intro,
         .step-copy,
-        .metric-card p,
         .prompt-card p,
         .prompt-guidance li,
         .future-list li,
@@ -263,7 +261,6 @@
             font-size: 1.05rem;
         }
 
-        .metrics,
         .steps-grid,
         .summary-grid,
         .prompt-meta {
@@ -271,12 +268,6 @@
             gap: 18px;
         }
 
-        .metrics {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            margin-bottom: 24px;
-        }
-
-        .metric-card,
         .step-card,
         .prompt-card,
         .summary-item,
@@ -288,7 +279,6 @@
             box-shadow: var(--shadow);
         }
 
-        .metric-card strong,
         .panel-lite strong {
             display: block;
             margin-bottom: 10px;
@@ -296,11 +286,6 @@
             font-size: 0.86rem;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-        }
-
-        .metric-card h4 {
-            margin-bottom: 8px;
-            font-size: 1.2rem;
         }
 
         .section-block {
@@ -522,7 +507,6 @@
                 position: static;
             }
 
-            .metrics,
             .prompt-meta,
             .summary-grid {
                 grid-template-columns: 1fr;
@@ -539,7 +523,6 @@
             .panel,
             .summary-panel,
             .sidebar,
-            .metric-card,
             .step-card,
             .prompt-card,
             .panel-lite {
@@ -591,52 +574,9 @@
             <section class="page is-active" data-page="home" id="home">
                 <div class="hero">
                     <div class="eyebrow">首页 / 入门必读</div>
-                    <h2>团队大模型使用指南与 AI-CODING 基础认知</h2>
-                    <p>这一页解决两件事：先让团队快速把 VS Code + GitHub Copilot 配好，再给出主流模型的选型基线，避免团队成员一开始就陷进工具混乱和模型误用。</p>
+                    <h2>团队大模型使用指南</h2>
+                    <p>先完成环境配置，再快速判断模型选型，团队成员可以直接进入可用状态。</p>
                 </div>
-
-                <div class="metrics">
-                    <article class="metric-card">
-                        <strong>文档定位</strong>
-                        <h4>团队统一上手入口</h4>
-                        <p>先统一环境，再统一协作方式，后续所有 Prompt、流程和实践都基于同一工作台展开。</p>
-                    </article>
-                    <article class="metric-card">
-                        <strong>发布方式</strong>
-                        <h4>GitHub Pages 静态站</h4>
-                        <p>无后端、无打包工具、部署简单，适合内部经验文档持续迭代。</p>
-                    </article>
-                    <article class="metric-card">
-                        <strong>页面扩展</strong>
-                        <h4>支持后续多层级沉淀</h4>
-                        <p>当前先落首页与提示词分享页，后续可继续加更多专题和子导航。</p>
-                    </article>
-                </div>
-
-                <section class="panel section-block">
-                    <div class="section-heading">
-                        <div>
-                            <div class="eyebrow">站点维护</div>
-                            <h3>这份 GitHub Pages 文档站应该怎么长期维护</h3>
-                        </div>
-                        <p class="table-note">把首页当作团队共识区，把提示词页当作可复用资产库，后续更新就不会乱。</p>
-                    </div>
-                    <div class="prompt-meta">
-                        <div class="panel-lite">
-                            <strong>首页放什么</strong>
-                            <p>放所有人都要先看到的内容，比如环境配置、模型选型、协作约定和维护方式。</p>
-                        </div>
-                        <div class="panel-lite">
-                            <strong>提示词页放什么</strong>
-                            <p>每个高频任务都沉淀成独立专题，写清楚适用边界、输入要求、期望输出和风险提醒。</p>
-                        </div>
-                        <div class="panel-lite">
-                            <strong>更新节奏</strong>
-                            <p>建议每周补一到两个真实用过的专题，不追求一次写全，只保留团队真正复用得上的内容。</p>
-                        </div>
-                    </div>
-                    <div class="footer-note">推荐维护规则：首页只放稳定共识；提示词页按场景扩充；每个专题都尽量包含“适用场景、Prompt 模板、风险提醒、建议输出形态”。</div>
-                </section>
 
                 <div class="section-block">
                     <div class="section-heading">
