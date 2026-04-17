@@ -541,6 +541,29 @@
             line-height: 1.85;
         }
 
+        .screenshot-guide {
+            margin: 20px 0 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .screenshot-guide img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .screenshot-caption {
+            margin: 0;
+            padding: 10px 16px;
+            font-size: 0.88rem;
+            color: var(--muted);
+            background: rgba(95, 61, 30, 0.05);
+            border-top: 1px solid var(--line);
+        }
+
         .video-frame {
             margin-top: 22px;
             padding: 18px;
@@ -797,7 +820,7 @@
                         <div>
                             <div class="eyebrow">视频一 / Git 存档</div>
                             <h3>Git 存档操作演示</h3>
-                            <p class="article-meta"><strong>视频文件：</strong>git方法.mp4 ｜ <strong>适用场景：</strong>版本留档、阶段性备份、关键节点归档 ｜ <strong>说明：</strong>直接在页面内播放，无需跳转外链</p>
+                            <p class="article-meta"><strong>分享者：</strong>柳依 ｜ <strong>视频文件：</strong>git方法.mp4 ｜ <strong>适用场景：</strong>版本留档、阶段性备份、关键节点归档 ｜ <strong>说明：</strong>直接在页面内播放，无需跳转外链</p>
                         </div>
                         <p class="page-intro">适合在准备封版、留一个稳定检查点，或者需要把当前工作状态可靠存档时使用。</p>
                     </div>
@@ -873,7 +896,7 @@
                         <article class="prompt-card topic-section is-active" id="prompt-subject-id-compat">
                             <div class="eyebrow">Prompt / 受试者与参与者列名兼容改造</div>
                             <h3 style="margin-top: 16px;">主键列名兼容改造</h3>
-                            <p class="article-meta"><strong>作者：</strong>李晓娟</p>
+                            <p class="article-meta"><strong>分享者：</strong>李晓娟</p>
                             <p class="page-intro">统一兼容“受试者代码”“参与者代码”等主键列名变体。</p>
 
                             <div class="pill-row">
@@ -934,7 +957,7 @@
                         <article class="prompt-card topic-section" id="prompt-project-cleanup">
                             <div class="eyebrow">Prompt / 项目文件清理</div>
                             <h3 style="margin-top: 16px;">项目目录保留式清理</h3>
-                            <p class="article-meta"><strong>作者：</strong>李晓娟</p>
+                            <p class="article-meta"><strong>分享者：</strong>李晓娟</p>
                             <p class="page-intro">只保留运行必需内容与核心数据。</p>
 
                             <div class="pill-row">
@@ -1023,9 +1046,87 @@
                 <section class="panel section-block">
                     <div class="section-heading">
                         <div>
-                            <div class="eyebrow">方法一 / 长 Session 管理</div>
+                            <div class="eyebrow">方法一 / 角色持久化</div>
+                            <h3>用 copilot-instructions.md 给 AI 一个永久角色</h3>
+                            <p class="article-meta"><strong>分享者：</strong>徐艺嘉 ｜ <strong>更新时间：</strong>2026-04-17 ｜ <strong>适用场景：</strong>跨项目、跨 Session 保持一致的 AI 协作风格与专业背景 ｜ <strong>关键词：</strong>copilot-instructions.md、角色设定、全局配置、用户级指令</p>
+                        </div>
+                        <p class="page-intro">不用每次对话都重新介绍自己的背景——把角色写进配置文件，Copilot 在每次开口前就已经知道它在和谁协作、应该用什么姿态回应。</p>
+                    </div>
+
+                    <div class="prompt-meta">
+                        <div class="panel-lite">
+                            <strong>问题是什么</strong>
+                            <p>每次新开一个 Session，AI 对你的背景、领域和工作方式一无所知。你要反复解释"我是药企的医学经理"、"我不是专业程序员"，对话才能找到节奏，效率很低。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>关键思路</strong>
+                            <p>VS Code 会在每次对话前自动加载 <code>copilot-instructions.md</code> 文件的内容并注入上下文，相当于给 Copilot 一份"入职手册"——无需你开口，它已经知道该扮演什么角色。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>两种生效范围</strong>
+                            <p>放在用户配置目录（<code>%AppData%/.../Code/User/prompts/</code>）则全局生效，所有项目通用；放在某个项目的根目录则只对该项目生效，互不干扰。</p>
+                        </div>
+                    </div>
+
+                    <h4 class="subsection-title">我们设定的角色是什么</h4>
+                    <p style="margin: 0 0 16px; color: var(--muted); line-height: 1.75;">这份配置文件将 Copilot 的角色设定为一位同时具备多重视角的复合型合作者，能在一次对话里无缝切换技术实现与业务需求两个维度：</p>
+                    <div class="method-grid">
+                        <article class="method-step">
+                            <h4>资深全栈工程师</h4>
+                            <p>负责代码实现、架构思考和工程规范。遇到技术问题时，以工程师视角给出可落地的方案，而不是泛泛而谈。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>产品经理 + 医学经理</h4>
+                            <p>理解需求背后的业务逻辑和药企场景边界。药企的数据合规、功能优先级、汇报逻辑，都在这个角色的认知范围内。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>药企统计师</h4>
+                            <p>熟悉临床数据结构、统计分析规范和医学报告惯例。处理数据相关任务时能给出符合行业标准的建议，而不是通用的数据科学思路。</p>
+                        </article>
+                    </div>
+
+                    <h4 class="subsection-title">如何配置</h4>
+                    <div class="method-grid">
+                        <article class="method-step">
+                            <h4>1. 找到配置目录</h4>
+                            <p>按 <strong>Win + R</strong>，输入 <code>%AppData%</code> 并回车，依次进入 <code>Code → User → prompts</code> 文件夹。如果 prompts 文件夹不存在，手动新建即可。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>2. 新建文件</h4>
+                            <p>在 prompts 文件夹内新建一个文本文件，命名为 <code>copilot-instructions.md</code>，用记事本或 VS Code 打开后，把角色设定内容粘贴进去并保存。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>3. 重启 VS Code 生效</h4>
+                            <p>保存文件后重新启动 VS Code，之后每次打开 Copilot Chat，这份角色设定就会自动注入——无需任何额外操作，也无需在对话里手动引用它。</p>
+                        </article>
+                    </div>
+
+                    <h4 class="subsection-title">配置文件内容示例</h4>
+                    <p style="margin: 0 0 12px; color: var(--muted); line-height: 1.75;">将以下内容复制到你的 <code>copilot-instructions.md</code> 文件中，根据实际情况调整细节：</p>
+                    <div class="command-summary">
+                        <h4>copilot-instructions.md</h4>
+                        <div class="command-list" style="display:block;">
+                            <div class="command-item" style="font-family: 'IBM Plex Sans', monospace; white-space: pre-wrap; font-size: 0.9rem; line-height: 1.8;">你是一位资深全栈工程师兼产品经理，同时具备药企医学经理和统计师的专业背景。
+
+你的协作原则：
+- 技术问题优先给出可落地的实现方案，避免理论堆砌
+- 涉及业务需求时，主动从药企合规、医学逻辑、统计规范角度审视
+- 用简洁、直接的语言回应，不要过度解释显而易见的内容
+- 遇到模糊需求时，先确认核心目标再动手，不要乱猜
+- 代码产出需附带最小必要注释，方便非专业背景同事阅读</div>
+                        </div>
+                    </div>
+
+                    <h4 class="subsection-title">为什么有效</h4>
+                    <div class="method-summary">
+                        <p>角色持久化解决的是 AI 协作中的"每次归零"问题。一个没有背景的 AI 会给出泛用答案；一个持续扮演同一角色的 AI 会记住你的工作语境，输出更贴近实际需要的内容。对团队来说，这份配置还有额外价值：它是一份可以共享的"协作契约"——把它放进项目根目录，所有成员的 Copilot 就会用同一套标准与项目交互，减少因 AI 输出风格不一致而造成的沟通摩擦。</p>
+                    </div>
+                <section class="panel section-block">
+                    <div class="section-heading">
+                        <div>
+                            <div class="eyebrow">方法二 / 长 Session 管理</div>
                             <h3>AI 协作转场法</h3>
-                            <p class="article-meta"><strong>作者：</strong>殷悦 ｜ <strong>更新时间：</strong>2026-04-17 ｜ <strong>适用场景：</strong>长 Session 协作、复杂项目接力、上下文开始漂移时 ｜ <strong>关键词：</strong>handover、context.md、agents-md、上下文管理</p>
+                            <p class="article-meta"><strong>分享者：</strong>殷悦 ｜ <strong>更新时间：</strong>2026-04-17 ｜ <strong>适用场景：</strong>长 Session 协作、复杂项目接力、上下文开始漂移时 ｜ <strong>关键词：</strong>handover、context.md、agents-md、上下文管理</p>
                         </div>
                         <p class="page-intro">核心目标不是让 AI 记住所有对话，而是让它始终站在最新、最干净的项目事实上继续工作。</p>
                     </div>
@@ -1065,6 +1166,62 @@
                     <div class="method-summary">
                         <p>这套方法的本质，是把 AI 的记忆负荷从“对话流”转移到“结构化文档”。对话适合推进，文档适合沉淀；当两者分工明确后，AI 不再需要从冗长上下文里反复打捞有效信息，智力状态会明显更稳定，项目进度也会因此变得更透明、更可回溯。对团队来说，context.md 不只是 handover 文件，更像每一轮协作后的“最高意志”，新 Session 直接从这里接棒即可。</p>
                     </div>
+                </section>
+
+                <section class="panel section-block">
+                    <div class="section-heading">
+                        <div>
+                            <div class="eyebrow">方法三 / 工程级代码质量</div>
+                            <h3>Superpowers 插件：让 AI 写出工程级代码</h3>
+                            <p class="article-meta"><strong>分享者：</strong>李晓娟 ｜ <strong>更新时间：</strong>2026-04-17 ｜ <strong>适用场景：</strong>需要测试覆盖、文档规范、遵循工程最佳实践的项目开发 ｜ <strong>关键词：</strong>Superpowers、agent skills、VS Code 插件、工程规范、代码质量</p>
+                        </div>
+                        <p class="page-intro">普通 AI 助手能写出"能跑的代码"，Superpowers 的目标是强制 AI 遵循完整的软件开发流程，输出真正可用于生产的工程级代码。</p>
+                    </div>
+
+                    <div class="prompt-meta">
+                        <div class="panel-lite">
+                            <strong>问题是什么</strong>
+                            <p>AI 生成的代码往往能运行，但缺少测试、没有文档、不遵循团队规范——像"聪明的实习生"，输出停留在玩具级，无法直接用于生产环境。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>关键思路</strong>
+                            <p>Superpowers 是由 Jesse Vincent（obra）开发的开源代理技能框架，相当于给 AI 配了一位"资深工程师导师"，通过内置 skills 约束 AI 始终遵循测试、文档、代码审查等完整开发流程。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>适用场景</strong>
+                            <p>适合需要测试覆盖的功能开发、对外交付的模块文档输出、长期维护型项目，以及对代码质量有明确要求的团队协作。</p>
+                        </div>
+                    </div>
+
+                    <h4 class="subsection-title">如何安装</h4>
+                    <p style="margin: 0 0 16px; color: var(--muted); line-height: 1.75;">打开 VS Code，点击左侧插件市场图标（Extensions），在搜索框中输入 <strong>Superpowers</strong>，找到 Jesse Vincent（obra）发布的版本后点击 <strong>Install</strong> 安装即可。安装后无需额外配置，插件会自动注入到 Copilot Chat 的代理能力中。</p>
+                    <div class="screenshot-guide">
+                        <img src="superpowers.png" alt="在 VS Code 插件市场搜索并安装 Superpowers">
+                        <p class="screenshot-caption">在 VS Code 扩展市场搜索 "Superpowers" 即可找到对应插件，点击 Install 后立即生效</p>
+                    </div>
+
+                    <h4 class="subsection-title">具体怎么做</h4>
+                    <div class="method-grid">
+                        <article class="method-step">
+                            <h4>1. 安装并验证</h4>
+                            <p>在 VS Code 扩展市场安装 Superpowers 后，打开 Copilot Chat 面板，试着描述一个开发任务，确认 AI 回复中出现测试建议或文档提示，说明插件已生效。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>2. 正常使用 Copilot</h4>
+                            <p>无需改变提问习惯，照常使用 Copilot Chat 描述功能需求。Superpowers 在后台为 AI 注入工程规范约束，会主动提示补充单元测试、生成模块文档或指出潜在的代码质量问题。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>3. 三维验收输出</h4>
+                            <p>收到 AI 输出后，对照三个维度检查：✓ 有没有测试覆盖、✓ 有没有必要注释、✓ 是否遵循项目规范。Superpowers 的目标正是把这三项标准内化为 AI 的默认行为，而不是等你事后追单。</p>
+                        </article>
+                    </div>
+
+                    <h4 class="subsection-title">为什么有效</h4>
+                    <div class="method-summary">
+                        <p>大多数 AI 编程助手被设计为"满足用户当前请求"，而不是"遵循软件工程最佳实践"。Superpowers 通过在 agent 层植入可配置的 skill 集合，系统性地改变了 AI 的默认行为边界——它不再只关心"能不能跑"，而是同时关心"测试有没有写、文档有没有同步、接口有没有规范"。对团队来说，这意味着 AI 协作产出可以从"需要人工补课"变成"可以直接进入 Code Review"，大幅降低因 AI 输出质量不稳定带来的返工成本。</p>
+                    </div>
+                </section>
+
                 </section>
             </section>
         </main>
