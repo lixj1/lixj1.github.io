@@ -1240,6 +1240,73 @@
                     </div>
                 </section>
 
+                <section class="panel section-block">
+                    <div class="section-heading">
+                        <div>
+                            <div class="eyebrow">方法四 / SSD 规范协作</div>
+                            <h3>Spec Kit：先 clarify，再实现</h3>
+                            <p class="article-meta"><strong>分享者：</strong>柳依 ｜ <strong>更新时间：</strong>2026-04-20 ｜ <strong>适用场景：</strong>需求容易歧义的功能开发、多人协作留痕、需要提升 prompt 效率的项目型任务 ｜ <strong>关键词：</strong>Spec Kit、SSD、clarify、/specs、code review</p>
+                        </div>
+                        <p class="page-intro">核心目标是先把需求和实现边界说清楚，再让 AI 进入编码阶段，避免“一上来就写代码”导致的返工。</p>
+                    </div>
+
+                    <div class="prompt-meta">
+                        <div class="panel-lite">
+                            <strong>问题是什么</strong>
+                            <p>很多 AI 协作失败，不是模型不够强，而是需求描述太快进入实现，导致功能边界、验收口径和实现路径都不够清楚，Prompt 越写越长，返工也越来越多。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>关键思路</strong>
+                            <p>Spec Kit 基于 SSD（Spec-Driven Development，规格驱动开发）框架，把“需求定义、澄清、计划、任务拆解、实现”拆成连续步骤。先用规格收敛问题，再让 AI 编码，输出会稳定很多。</p>
+                        </div>
+                        <div class="panel-lite">
+                            <strong>适用场景</strong>
+                            <p>适合新功能从 0 到 1、需要先和 AI 对齐业务逻辑的任务，以及希望把 feature 决策过程沉淀下来、方便后续 code review 的团队协作场景。</p>
+                        </div>
+                    </div>
+
+                    <h4 class="subsection-title">如何安装</h4>
+                    <p style="margin: 0 0 14px; color: var(--muted); line-height: 1.75;">完整安装文档请参考官方 quickstart：<a href="https://github.github.com/spec-kit/quickstart.html#step-1-install-specify" target="_blank" rel="noopener noreferrer">github.github.com/spec-kit/quickstart</a></p>
+                    <div class="command-summary">
+                        <h4>Quick Start</h4>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <code>uvx --from git+https://github.com/github/spec-kit.git specify init .</code>
+                                <p>在当前项目目录初始化 Spec Kit。执行后会把 SSD 所需的命令、模板和目录结构接进项目里，适合作为现有仓库的规范化协作底座。</p>
+                            </div>
+                            <div class="command-item">
+                                <code>uvx --from git+https://github.com/github/spec-kit.git specify init . --script ps</code>
+                                <p>Windows / PowerShell 场景下可显式指定脚本类型。官方 quickstart 也支持 <code>--script sh</code>，便于不同团队环境统一命令执行方式。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="subsection-title">具体怎么做</h4>
+                    <div class="screenshot-guide" style="margin-bottom: 20px;">
+                        <img src="speckit-flow.svg" alt="Spec Kit SSD 六步工作流：specify → clarify → plan → tasks → analyze → implement，全程留痕至 /specs">
+                        <p class="screenshot-caption">Spec Kit 的六步工作流：先用 <code>.clarify</code> 把需求说清楚，再进入实现阶段；全程规格沉淀至 <code>/specs</code></p>
+                    </div>
+                    <div class="method-grid">
+                        <article class="method-step">
+                            <h4>1. 先 specify，定义目标</h4>
+                            <p>先用 <code>/speckit.specify</code> 描述你要做什么、为什么做，不要急着给技术实现。这样 AI 会先围绕业务目标理解需求，而不是直接跳到代码细节。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>2. 用 clarify 追问细节</h4>
+                            <p>再用 <code>/speckit.clarify</code> 梳理实现逻辑和功能边界。这个阶段 AI 会主动跟你确认歧义点，把遗漏条件、交互规则和验收口径提前补齐，显著提高后续 Prompt 的有效密度。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>3. 用 /specs 留痕管理</h4>
+                            <p>当 feature 进入 plan、tasks、implement 阶段后，相关规格和任务会沉淀到 <code>/specs</code> 目录下。这样需求演化、实现计划和任务拆解都有据可查，后续 code review 或交接时会轻松很多。</p>
+                        </article>
+                    </div>
+
+                    <h4 class="subsection-title">为什么有效</h4>
+                    <div class="method-summary">
+                        <p>Spec Kit 的价值，不只是“多了一套命令”，而是把 AI 协作从一次性 Prompt 提问，升级成可审阅、可追踪、可分阶段推进的 SSD 工作流。clarify 负责把需求讲清楚，减少无效往返；/specs 负责把 feature 的关键决策和实现路径沉淀下来，方便团队成员复盘，也让 code review 不再只盯最终代码，而能回到需求和方案本身做判断。</p>
+                    </div>
+                </section>
+
                 </section>
             </section>
         </main>

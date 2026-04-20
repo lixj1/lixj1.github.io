@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 180" font-family="'IBM Plex Sans','Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 1, 6 4, 0 7" fill="#c49a6c"/>
+    </marker>
+  </defs>
+  <rect width="880" height="180" fill="#faf6ef" rx="14"/>
+  <text x="440" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="#5f3d1e" letter-spacing="0.08em">SPEC KIT · SSD 六步工作流</text>
+
+  <!-- Step 1: specify -->
+  <rect x="75" y="52" width="110" height="60" rx="10" fill="#fff8ee" stroke="#c49a6c" stroke-width="1.5"/>
+  <text x="130" y="75" text-anchor="middle" font-size="9.5" fill="#9a7d65" font-weight="500">STEP 1</text>
+  <text x="130" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#5f3d1e">.specify</text>
+  <text x="130" y="108" text-anchor="middle" font-size="9" fill="#9a7d65">描述需求目标</text>
+  <line x1="186" y1="82" x2="196" y2="82" stroke="#c49a6c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 2: clarify (highlighted) -->
+  <rect x="199" y="52" width="110" height="60" rx="10" fill="#fff0e6" stroke="#d97757" stroke-width="2"/>
+  <text x="254" y="75" text-anchor="middle" font-size="9.5" fill="#d97757" font-weight="700">STEP 2  ★</text>
+  <text x="254" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#b85c35">.clarify</text>
+  <text x="254" y="108" text-anchor="middle" font-size="9" fill="#b85c35">AI 追问 · 消歧义</text>
+  <line x1="310" y1="82" x2="320" y2="82" stroke="#c49a6c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 3: plan -->
+  <rect x="323" y="52" width="110" height="60" rx="10" fill="#fff8ee" stroke="#c49a6c" stroke-width="1.5"/>
+  <text x="378" y="75" text-anchor="middle" font-size="9.5" fill="#9a7d65" font-weight="500">STEP 3</text>
+  <text x="378" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#5f3d1e">.plan</text>
+  <text x="378" y="108" text-anchor="middle" font-size="9" fill="#9a7d65">技术方案规划</text>
+  <line x1="434" y1="82" x2="444" y2="82" stroke="#c49a6c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 4: tasks -->
+  <rect x="447" y="52" width="110" height="60" rx="10" fill="#fff8ee" stroke="#c49a6c" stroke-width="1.5"/>
+  <text x="502" y="75" text-anchor="middle" font-size="9.5" fill="#9a7d65" font-weight="500">STEP 4</text>
+  <text x="502" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#5f3d1e">.tasks</text>
+  <text x="502" y="108" text-anchor="middle" font-size="9" fill="#9a7d65">拆解任务清单</text>
+  <line x1="558" y1="82" x2="568" y2="82" stroke="#c49a6c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 5: analyze -->
+  <rect x="571" y="52" width="110" height="60" rx="10" fill="#fff8ee" stroke="#c49a6c" stroke-width="1.5"/>
+  <text x="626" y="75" text-anchor="middle" font-size="9.5" fill="#9a7d65" font-weight="500">STEP 5</text>
+  <text x="626" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#5f3d1e">.analyze</text>
+  <text x="626" y="108" text-anchor="middle" font-size="9" fill="#9a7d65">验证实施计划</text>
+  <line x1="682" y1="82" x2="692" y2="82" stroke="#c49a6c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 6: implement -->
+  <rect x="695" y="52" width="110" height="60" rx="10" fill="#5f3d1e" stroke="#5f3d1e" stroke-width="1.5"/>
+  <text x="750" y="75" text-anchor="middle" font-size="9.5" fill="#f2c9a0" font-weight="500">STEP 6</text>
+  <text x="750" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="#ffeedd">.implement</text>
+  <text x="750" y="108" text-anchor="middle" font-size="9" fill="#f2c9a0">执行编码实现</text>
+
+  <!-- /specs note -->
+  <text x="440" y="150" text-anchor="middle" font-size="11" fill="#8b5e34">全程规格与决策沉淀至 <tspan font-weight="700" fill="#5f3d1e">/specs</tspan> 目录，便于复盘与 code review</text>
+</svg>
