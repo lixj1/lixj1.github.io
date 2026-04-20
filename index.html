@@ -1064,7 +1064,7 @@
                         </div>
                         <div class="panel-lite">
                             <strong>两种生效范围</strong>
-                            <p>放在用户配置目录（<code>%AppData%/.../Code/User/prompts/</code>）则全局生效，所有项目通用；放在某个项目的根目录则只对该项目生效，互不干扰。</p>
+                            <p>放在用户配置目录时，适合沉淀个人通用习惯；如果只想让当前项目生效，推荐放在 <code>&lt;项目根目录&gt;/.github/copilot-instructions.md</code>，让项目级规则和团队协作约定跟着仓库一起走。</p>
                         </div>
                     </div>
 
@@ -1085,7 +1085,7 @@
                         </article>
                     </div>
 
-                    <h4 class="subsection-title">如何配置</h4>
+                    <h4 class="subsection-title">用户级如何配置</h4>
                     <div class="method-grid">
                         <article class="method-step">
                             <h4>1. 找到配置目录</h4>
@@ -1098,6 +1098,23 @@
                         <article class="method-step">
                             <h4>3. 重启 VS Code 生效</h4>
                             <p>保存文件后重新启动 VS Code，之后每次打开 Copilot Chat，这份角色设定就会自动注入——无需任何额外操作，也无需在对话里手动引用它。</p>
+                        </article>
+                    </div>
+
+                    <h4 class="subsection-title">项目级推荐路径</h4>
+                    <p style="margin: 0 0 16px; color: var(--muted); line-height: 1.75;">如果你希望这套角色只在当前项目生效，更推荐使用工作区级放法：在项目里新建 <code>.github/copilot-instructions.md</code>。这也是团队共享时最清晰的结构，路径固定、语义明确，后续成员接手项目时一眼就能找到。</p>
+                    <div class="method-grid">
+                        <article class="method-step">
+                            <h4>1. 在项目中创建 .github</h4>
+                            <p>打开当前项目根目录，在根目录下新建 <code>.github</code> 文件夹。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>2. 新建指令文件</h4>
+                            <p>在 <code>.github</code> 文件夹中创建 <code>copilot-instructions.md</code>，最终路径应为 <code>&lt;项目根目录&gt;/.github/copilot-instructions.md</code>。</p>
+                        </article>
+                        <article class="method-step">
+                            <h4>3. 重新打开新会话</h4>
+                            <p>保存后重新打开当前项目里的 Copilot Chat 新对话，项目级指令会自动加载。这样只影响当前仓库，不会把项目术语带到别的项目里。</p>
                         </article>
                     </div>
 
@@ -1119,8 +1136,9 @@
 
                     <h4 class="subsection-title">为什么有效</h4>
                     <div class="method-summary">
-                        <p>角色持久化解决的是 AI 协作中的"每次归零"问题。一个没有背景的 AI 会给出泛用答案；一个持续扮演同一角色的 AI 会记住你的工作语境，输出更贴近实际需要的内容。对团队来说，这份配置还有额外价值：它是一份可以共享的"协作契约"——把它放进项目根目录，所有成员的 Copilot 就会用同一套标准与项目交互，减少因 AI 输出风格不一致而造成的沟通摩擦。</p>
+                        <p>角色持久化解决的是 AI 协作中的"每次归零"问题。一个没有背景的 AI 会给出泛用答案；一个持续扮演同一角色的 AI 会记住你的工作语境，输出更贴近实际需要的内容。对团队来说，这份配置还有额外价值：它是一份可以共享的"协作契约"——把它放进 <code>.github/copilot-instructions.md</code>，所有成员的 Copilot 就会在当前项目里采用同一套标准与术语，减少因 AI 输出风格不一致而造成的沟通摩擦。</p>
                     </div>
+                </section>
                 <section class="panel section-block">
                     <div class="section-heading">
                         <div>
